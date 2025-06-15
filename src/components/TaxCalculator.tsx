@@ -105,7 +105,7 @@ const TaxCalculator = () => {
   return (
     <div className="w-full max-w-md bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6">
       <div>
-        <h2 className="text-xl font-semibold mb-1 text-gray-800 text-center">Compute your net income, PAYE income tax and SSNIT deduction.</h2>
+        <h2 className="text-xl font-semibold mb-1 text-gray-800 text-center">Compute your net income, PAYE income tax and SSNIT deduction with the Salary Calculator.</h2>
         <p className="text-gray-600 text-center text-sm">Enter your details to see your take-home income and deductions.</p>
       </div>
       <form className="space-y-4" autoComplete="off" onSubmit={e => e.preventDefault()}>

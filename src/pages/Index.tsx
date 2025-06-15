@@ -6,7 +6,7 @@ const Index = () => (
     {/* Header */}
     <header className="w-full bg-purple-700 py-4 px-4 flex items-center justify-center shadow-sm">
       <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
-        Tax Calculator
+        Salary Calculator
         <span className="text-[22px]" role="img" aria-label="Ghana flag">🇬🇭</span>
       </h1>
     </header>
