@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface Props {
@@ -12,7 +11,7 @@ const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFr
 
 const NetIncomeResult: React.FC<Props> = ({ netIncome, incomeTax, ssnit, tier2 }) => (
   <div className="w-full flex flex-col items-center gap-1">
-    <div className="text-center text-sm font-medium text-purple-700">Net Income (take home)</div>
+    <div className="text-center text-sm font-medium text-purple-700">Net Income (take home after all deductions)</div>
     <div className="text-3xl font-extrabold text-purple-700 tracking-wider mb-2">{ghcFormat(netIncome)}</div>
     <div className="flex flex-row justify-center gap-8 mt-2">
       <div className="text-xs text-gray-600 flex flex-col items-center">
@@ -20,12 +19,12 @@ const NetIncomeResult: React.FC<Props> = ({ netIncome, incomeTax, ssnit, tier2 }
         <span className="text-base font-bold text-blue-700">{ghcFormat(incomeTax)}</span>
       </div>
       <div className="text-xs text-gray-600 flex flex-col items-center">
-        <span>SSNIT (Tier 1)</span>
+        <span>SSNIT (Tier 1, 5.5%)</span>
         <span className="text-base font-bold text-blue-700">{ghcFormat(ssnit)}</span>
       </div>
       {tier2 !== undefined && (
         <div className="text-xs text-gray-600 flex flex-col items-center">
-          <span>Pension (Tier 2)</span>
+          <span>Pension (Tier 2, 5%)</span>
           <span className="text-base font-bold text-blue-700">{ghcFormat(tier2)}</span>
         </div>
       )}
@@ -34,4 +33,3 @@ const NetIncomeResult: React.FC<Props> = ({ netIncome, incomeTax, ssnit, tier2 }
 );
 
 export default NetIncomeResult;
-

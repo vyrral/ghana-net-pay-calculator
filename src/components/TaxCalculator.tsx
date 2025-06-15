@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,16 +15,20 @@ interface TaxResults {
   breakdown: { label: string; amount: number; }[];
 }
 
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+const ghcFormat = (n: number) =>
+  `GH₵ ${n.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
-// Deduct both SSNIT and Tier 2 from gross:
+// Only deduct SSNIT (Tier 1) from gross for PAYE
 const calcTax = (basic: number, allowances: number, relief: number): TaxResults => {
   const gross = basic + allowances;
   const ssnit = +(gross * 0.055).toFixed(2);
   const tier2 = +(gross * 0.05).toFixed(2);
 
-  // Taxable income after SSNIT and Tier 2
-  let taxable = gross - ssnit - tier2 - relief;
+  // PAYE taxable income: gross - SSNIT - relief
+  let taxable = gross - ssnit - relief;
   if (taxable < 0) taxable = 0;
 
   const bands = [
@@ -37,14 +40,13 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
     { limit: Infinity, rate: 0.3 },
   ];
   const bandRanges = [494, 162, 3170, 2072, 3387];
-  let remaining = taxable, taxed = 0, incomeTax = 0;
+  let remaining = taxable, incomeTax = 0;
   const breakdown: { label: string; amount: number }[] = [];
 
   if (remaining > 0) {
     const amt = Math.min(remaining, bandRanges[0]);
     breakdown.push({ label: "0% band", amount: amt });
     remaining -= amt;
-    if (amt > 0) taxed += amt;
   }
   if (remaining > 0) {
     const amt = Math.min(remaining, bandRanges[1]);
@@ -76,6 +78,7 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
   }
 
   incomeTax = +incomeTax.toFixed(2);
+  // For net income, deduct Tier 2 after PAYE calculation
   const netIncome = +(gross - ssnit - tier2 - incomeTax).toFixed(2);
 
   return {
@@ -182,4 +185,3 @@ const TaxCalculator = () => {
 };
 
 export default TaxCalculator;
-

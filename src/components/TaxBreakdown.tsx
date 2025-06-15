@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -40,16 +39,16 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
           <span className="font-medium">{ghcFormat(results.ssnit)}</span>
         </li>
         <li className="flex justify-between items-center py-2">
+          <span className="text-gray-600">Tax Relief</span>
+          <span className="font-medium">{ghcFormat(results.gross - results.ssnit - results.taxable)}</span>
+        </li>
+        <li className="flex justify-between items-center py-2">
+          <span className="text-gray-600">Taxable Income (for PAYE)</span>
+          <span className="font-medium">{ghcFormat(results.taxable)}</span>
+        </li>
+        <li className="flex justify-between items-center py-2">
           <span className="text-gray-600">Pension (Tier 2, 5%)</span>
           <span className="font-medium">{ghcFormat(results.tier2)}</span>
-        </li>
-        <li className="flex justify-between items-center py-2">
-          <span className="text-gray-600">Tax Relief</span>
-          <span className="font-medium">{ghcFormat(results.taxable + results.ssnit + results.tier2 - results.gross)}</span>
-        </li>
-        <li className="flex justify-between items-center py-2">
-          <span className="text-gray-600">Taxable Income</span>
-          <span className="font-medium">{ghcFormat(results.taxable)}</span>
         </li>
       </ul>
       <div className="mt-4">
@@ -81,4 +80,3 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
 );
 
 export default TaxBreakdown;
-
