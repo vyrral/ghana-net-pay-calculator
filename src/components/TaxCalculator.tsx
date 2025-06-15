@@ -21,7 +21,7 @@ const ghcFormat = (n: number) =>
     maximumFractionDigits: 2,
   })}`;
 
-// Only deduct SSNIT (Tier 1) from gross for PAYE
+// Correct Ghana PAYE: 494 at 0%, 110 at 5%, 130 at 10%, 3167 at 17.5%, 356 at 25%, rest at 30%
 const calcTax = (basic: number, allowances: number, relief: number): TaxResults => {
   const gross = basic + allowances;
   const ssnit = +(gross * 0.055).toFixed(2);
@@ -31,54 +31,33 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
   let taxable = gross - ssnit - relief;
   if (taxable < 0) taxable = 0;
 
+  // Correct tax bands and ranges per 2024 Ghana tax
   const bands = [
-    { limit: 494, rate: 0 },
-    { limit: 656, rate: 0.05 },
-    { limit: 3826, rate: 0.1 },
-    { limit: 5898, rate: 0.175 },
-    { limit: 9285, rate: 0.25 },
-    { limit: Infinity, rate: 0.3 },
+    { range: 494, rate: 0 },
+    { range: 110, rate: 0.05 },
+    { range: 130, rate: 0.10 },
+    { range: 3167, rate: 0.175 },
+    { range: 356, rate: 0.25 },
+    { range: Infinity, rate: 0.30 }
   ];
-  const bandRanges = [494, 162, 3170, 2072, 3387];
+
   let remaining = taxable, incomeTax = 0;
   const breakdown: { label: string; amount: number }[] = [];
 
-  if (remaining > 0) {
-    const amt = Math.min(remaining, bandRanges[0]);
-    breakdown.push({ label: "0% band", amount: amt });
+  for (let i = 0; i < bands.length; ++i) {
+    if (remaining <= 0) break;
+    const amt = Math.min(remaining, bands[i].range);
+    if (bands[i].rate === 0) {
+      breakdown.push({ label: "0% band", amount: amt });
+    } else {
+      breakdown.push({ label: `${(bands[i].rate * 100).toFixed(1)}% band`, amount: amt });
+      incomeTax += amt * bands[i].rate;
+    }
     remaining -= amt;
-  }
-  if (remaining > 0) {
-    const amt = Math.min(remaining, bandRanges[1]);
-    incomeTax += amt * 0.05;
-    breakdown.push({ label: "5% band", amount: amt });
-    remaining -= amt;
-  }
-  if (remaining > 0) {
-    const amt = Math.min(remaining, bandRanges[2]);
-    incomeTax += amt * 0.1;
-    breakdown.push({ label: "10% band", amount: amt });
-    remaining -= amt;
-  }
-  if (remaining > 0) {
-    const amt = Math.min(remaining, bandRanges[3]);
-    incomeTax += amt * 0.175;
-    breakdown.push({ label: "17.5% band", amount: amt });
-    remaining -= amt;
-  }
-  if (remaining > 0) {
-    const amt = Math.min(remaining, bandRanges[4]);
-    incomeTax += amt * 0.25;
-    breakdown.push({ label: "25% band", amount: amt });
-    remaining -= amt;
-  }
-  if (remaining > 0) {
-    incomeTax += remaining * 0.3;
-    breakdown.push({ label: "30% band", amount: remaining });
   }
 
   incomeTax = +incomeTax.toFixed(2);
-  // For net income, DO NOT deduct Tier 2 (for take-home), only SSNIT and income tax as per reference calculation
+  // Net income: only SSNIT and income tax deducted, not Tier 2 (matches reference)
   const netIncome = +(gross - ssnit - incomeTax).toFixed(2);
 
   return {
