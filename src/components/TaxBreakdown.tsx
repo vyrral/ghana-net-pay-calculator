@@ -11,6 +11,7 @@ interface Props {
   results: {
     gross: number;
     ssnit: number;
+    tier2: number;
     taxable: number;
     incomeTax: number;
     netIncome: number;
@@ -35,12 +36,16 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
           <span className="font-medium">{ghcFormat(results.gross)}</span>
         </li>
         <li className="flex justify-between items-center py-2">
-          <span className="text-gray-600">SSNIT (5.5%)</span>
+          <span className="text-gray-600">SSNIT (Tier 1, 5.5%)</span>
           <span className="font-medium">{ghcFormat(results.ssnit)}</span>
         </li>
         <li className="flex justify-between items-center py-2">
+          <span className="text-gray-600">Pension (Tier 2, 5%)</span>
+          <span className="font-medium">{ghcFormat(results.tier2)}</span>
+        </li>
+        <li className="flex justify-between items-center py-2">
           <span className="text-gray-600">Tax Relief</span>
-          <span className="font-medium">{ghcFormat(results.taxable + results.ssnit - results.gross)}</span>
+          <span className="font-medium">{ghcFormat(results.taxable + results.ssnit + results.tier2 - results.gross)}</span>
         </li>
         <li className="flex justify-between items-center py-2">
           <span className="text-gray-600">Taxable Income</span>
@@ -76,3 +81,4 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
 );
 
 export default TaxBreakdown;
+
