@@ -171,6 +171,9 @@ const TaxCalculator = () => {
         onOpenChange={setShowBreakdown}
         results={results}
       />
+      <p className="text-xs text-center text-muted-foreground mt-6">
+        We do our best to ensure the accuracy of this tool but we cannot be held responsible for any errors.
+      </p>
     </div>
   );
 };
