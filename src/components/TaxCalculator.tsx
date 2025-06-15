@@ -173,6 +173,8 @@ const TaxCalculator = () => {
       />
       <p className="text-xs text-center text-muted-foreground mt-6">
         We do our best to ensure the accuracy of this tool but we cannot be held responsible for any errors.
+        <br />
+        <span className="block mt-1 text-xs text-muted-foreground">business@kobydigital.com</span>
       </p>
     </div>
   );
