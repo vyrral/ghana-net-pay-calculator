@@ -78,8 +78,8 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
   }
 
   incomeTax = +incomeTax.toFixed(2);
-  // For net income, deduct Tier 2 after PAYE calculation
-  const netIncome = +(gross - ssnit - tier2 - incomeTax).toFixed(2);
+  // For net income, DO NOT deduct Tier 2 (for take-home), only SSNIT and income tax as per reference calculation
+  const netIncome = +(gross - ssnit - incomeTax).toFixed(2);
 
   return {
     gross,
