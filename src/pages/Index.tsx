@@ -1,14 +1,20 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
-};
+import TaxCalculator from "@/components/TaxCalculator";
+
+const Index = () => (
+  <div className="min-h-screen bg-gray-50 flex flex-col">
+    {/* Header */}
+    <header className="w-full bg-purple-700 py-4 px-4 flex items-center justify-center shadow-sm">
+      <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
+        Tax Calculator
+        <span className="text-[22px]" role="img" aria-label="Ghana flag">🇬🇭</span>
+      </h1>
+    </header>
+    {/* Main Content */}
+    <main className="flex-1 flex items-center justify-center p-4">
+      <TaxCalculator />
+    </main>
+  </div>
+);
 
 export default Index;
