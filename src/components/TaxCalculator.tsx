@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -95,12 +94,17 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
 };
 
 const TaxCalculator = () => {
-  const [basic, setBasic] = useState<number>(0);
-  const [allowances, setAllowances] = useState<number>(0);
-  const [relief, setRelief] = useState<number>(0);
+  const [basic, setBasic] = useState<string>("");
+  const [allowances, setAllowances] = useState<string>("");
+  const [relief, setRelief] = useState<string>("");
   const [showBreakdown, setShowBreakdown] = useState(false);
 
-  const results = calcTax(basic, allowances, relief);
+  // Convert input values to numbers; treat empty as 0
+  const parsedBasic = basic === "" ? 0 : +basic;
+  const parsedAllowances = allowances === "" ? 0 : +allowances;
+  const parsedRelief = relief === "" ? 0 : +relief;
+
+  const results = calcTax(parsedBasic, parsedAllowances, parsedRelief);
 
   return (
     <div className="w-full max-w-md bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6">
@@ -117,7 +121,7 @@ const TaxCalculator = () => {
               type="number"
               min={0}
               value={basic}
-              onChange={e => setBasic(+e.target.value)}
+              onChange={e => setBasic(e.target.value)}
               placeholder="0"
               className="text-base"
             />
@@ -133,7 +137,7 @@ const TaxCalculator = () => {
               type="number"
               min={0}
               value={allowances}
-              onChange={e => setAllowances(+e.target.value)}
+              onChange={e => setAllowances(e.target.value)}
               placeholder="0"
               className="text-base"
             />
@@ -147,7 +151,7 @@ const TaxCalculator = () => {
               type="number"
               min={0}
               value={relief}
-              onChange={e => setRelief(+e.target.value)}
+              onChange={e => setRelief(e.target.value)}
               placeholder="0"
               className="text-base"
             />
