@@ -111,41 +111,47 @@ const TaxCalculator = () => {
       <form className="space-y-4" autoComplete="off" onSubmit={e => e.preventDefault()}>
         <div>
           <label className="block text-sm mb-1 text-gray-700 font-medium">Monthly basic income</label>
-          <Input
-            type="number"
-            min={0}
-            value={basic}
-            onChange={e => setBasic(+e.target.value)}
-            startIcon={<span className="font-medium text-gray-500 mr-2">GH₵</span>}
-            placeholder="0"
-            className="text-base"
-          />
+          <div className="flex items-center">
+            <span className="font-medium text-gray-500 mr-2">GH₵</span>
+            <Input
+              type="number"
+              min={0}
+              value={basic}
+              onChange={e => setBasic(+e.target.value)}
+              placeholder="0"
+              className="text-base"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm mb-1 text-gray-700 font-medium">
             Monthly allowances<span className="text-xs pl-1">*</span>
           </label>
-          <Input
-            type="number"
-            min={0}
-            value={allowances}
-            onChange={e => setAllowances(+e.target.value)}
-            startIcon={<span className="font-medium text-gray-500 mr-2">GH₵</span>}
-            placeholder="0"
-            className="text-base"
-          />
+          <div className="flex items-center">
+            <span className="font-medium text-gray-500 mr-2">GH₵</span>
+            <Input
+              type="number"
+              min={0}
+              value={allowances}
+              onChange={e => setAllowances(+e.target.value)}
+              placeholder="0"
+              className="text-base"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-sm mb-1 text-gray-700 font-medium">Tax relief</label>
-          <Input
-            type="number"
-            min={0}
-            value={relief}
-            onChange={e => setRelief(+e.target.value)}
-            startIcon={<span className="font-medium text-gray-500 mr-2">GH₵</span>}
-            placeholder="0"
-            className="text-base"
-          />
+          <div className="flex items-center">
+            <span className="font-medium text-gray-500 mr-2">GH₵</span>
+            <Input
+              type="number"
+              min={0}
+              value={relief}
+              onChange={e => setRelief(+e.target.value)}
+              placeholder="0"
+              className="text-base"
+            />
+          </div>
         </div>
       </form>
       <Separator />
