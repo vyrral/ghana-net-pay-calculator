@@ -3,6 +3,8 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { Mail, Phone } from "lucide-react";
 import { useState } from "react";
 
@@ -13,13 +15,39 @@ const Contact = () => {
     subject: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for your message. We'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error: any) {
+      console.error("Error sending email:", error);
+      toast({
+        title: "Error sending message",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -79,6 +107,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="mt-1"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -92,6 +121,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="mt-1"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -105,6 +135,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="mt-1"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -117,13 +148,18 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    disabled={isSubmitting}
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Tell us how we can help you..."
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-purple-700 hover:bg-purple-800">
-                  Send Message
+                <Button 
+                  type="submit" 
+                  className="w-full bg-purple-700 hover:bg-purple-800"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
