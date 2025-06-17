@@ -1,6 +1,6 @@
-import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
+import { jsPDF } from "jspdf";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 
 type BreakdownEntry = { label: string; amount: number; };
 
@@ -19,6 +19,48 @@ interface Props {
 }
 
 const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+const downloadPDF = (results: Props["results"]) => {
+  const doc = new jsPDF();
+  doc.setFontSize(18);
+  doc.text("Tax Breakdown", 14, 16);
+
+  doc.setFontSize(12);
+  let y = 28;
+  doc.text("See how your monthly salary tax is calculated.", 14, y);
+
+  y += 10;
+  doc.text(`Gross Income: ${ghcFormat(results.gross)}`, 14, y);
+  y += 8;
+  doc.text(`SSNIT (Tier 1, 5.5%): ${ghcFormat(results.ssnit)}`, 14, y);
+  y += 8;
+  doc.text(`Tax Relief: ${ghcFormat(results.gross - results.ssnit - results.taxable)}`, 14, y);
+  y += 8;
+  doc.text(`Taxable Income (for PAYE): ${ghcFormat(results.taxable)}`, 14, y);
+  y += 8;
+  doc.text(`Pension (Tier 2, 5%): ${ghcFormat(results.tier2)}`, 14, y);
+
+  y += 12;
+  doc.setFont(undefined, "bold");
+  doc.text("Tax Band Application:", 14, y);
+  doc.setFont(undefined, "normal");
+  y += 8;
+
+  doc.text("Band", 14, y);
+  doc.text("Amount", 80, y);
+  y += 6;
+
+  results.breakdown.forEach((b) => {
+    doc.text(b.label, 14, y);
+    doc.text(ghcFormat(b.amount), 80, y);
+    y += 6;
+  });
+
+  y += 8;
+  doc.setFont(undefined, "bold");
+  doc.text(`Net Income: ${ghcFormat(results.netIncome)}`, 14, y);
+  doc.save("tax_breakdown.pdf");
+};
 
 const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
@@ -70,7 +112,13 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end mt-6">
+      <div className="flex justify-end mt-6 gap-2">
+        <Button
+          variant="outline"
+          onClick={() => downloadPDF(results)}
+        >
+          Download PDF
+        </Button>
         <DialogClose asChild>
           <Button variant="outline">Close</Button>
         </DialogClose>
