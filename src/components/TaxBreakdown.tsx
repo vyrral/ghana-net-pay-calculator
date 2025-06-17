@@ -26,7 +26,7 @@ interface Props {
 }
 
 const ghcFormat = (n: number) =>
-  `GH₵ ${n.toLocaleString(undefined, {
+  `GHC ${n.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
