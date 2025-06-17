@@ -46,11 +46,14 @@ const SalaryPerHour = () => {
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6">
           <div>
-            <h2 className="text-2xl font-semibold mb-2 text-gray-800 text-center">Salary Per Hour Converter</h2>
-            <p className="text-gray-600 text-center text-sm">Convert your salary to hourly rate and compare different pay structures</p>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 text-center">
+              Ghana Salary to Hourly Rate Converter
+            </h1>
+            <p className="text-gray-600 text-center text-sm">Convert your salary to hourly rate and compare different pay structures in Ghana</p>
           </div>
 
           <form className="space-y-4" autoComplete="off" onSubmit={e => e.preventDefault()}>
+            <h2 className="text-lg font-semibold text-gray-800 mb-3">Salary Details</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm mb-1 text-gray-700 font-medium">Salary amount</label>
@@ -83,6 +86,7 @@ const SalaryPerHour = () => {
               </div>
             </div>
 
+            <h3 className="text-md font-medium text-gray-800 mb-2">Work Schedule</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm mb-1 text-gray-700 font-medium">Hours per week</label>
@@ -115,7 +119,7 @@ const SalaryPerHour = () => {
           <Separator />
 
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-purple-700 mb-2">Your Hourly Rate</h3>
+            <h2 className="text-lg font-semibold text-purple-700 mb-2">Your Hourly Rate</h2>
             <div className="text-4xl font-bold text-purple-700 mb-4">
               {ghcFormat(hourlyRate)}/hour
             </div>
@@ -124,7 +128,7 @@ const SalaryPerHour = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg text-purple-700">Breakdown</CardTitle>
+                <CardTitle className="text-lg text-purple-700">Pay Breakdown</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between">
@@ -152,7 +156,7 @@ const SalaryPerHour = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg text-purple-700">Work Details</CardTitle>
+                <CardTitle className="text-lg text-purple-700">Work Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between">
@@ -176,7 +180,7 @@ const SalaryPerHour = () => {
           </div>
 
           <div className="bg-green-50 p-4 rounded-lg text-sm text-green-800">
-            <h4 className="font-semibold mb-2">💡 Helpful Tips:</h4>
+            <h3 className="font-semibold mb-2">💡 Helpful Tips for Ghana:</h3>
             <ul className="space-y-1 text-xs">
               <li>• Standard full-time work is typically 40 hours/week, 52 weeks/year</li>
               <li>• Consider vacation time and holidays by reducing weeks per year</li>

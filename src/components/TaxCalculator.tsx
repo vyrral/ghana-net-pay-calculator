@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -86,12 +87,14 @@ const TaxCalculator = () => {
   const results = calcTax(parsedBasic, parsedAllowances, parsedRelief);
 
   return (
-    <div className="w-full max-w-md bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6">
+    <div className="w-full max-w-md bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6 mx-auto">
       <div>
-        <h2 className="text-xl font-semibold mb-1 text-gray-800 text-center">Compute your net income, PAYE income tax and pension deductions with the Salary Calculator.</h2>
-        <p className="text-gray-600 text-center text-sm">Enter your details to see your take-home income and deductions.</p>
+        <h2 className="text-xl font-semibold mb-1 text-gray-800 text-center">Calculate Your Net Income and Tax Deductions</h2>
+        <p className="text-gray-600 text-center text-sm">Enter your salary details to see your take-home income, PAYE tax, and SSNIT contributions.</p>
       </div>
+      
       <form className="space-y-4" autoComplete="off" onSubmit={e => e.preventDefault()}>
+        <h3 className="text-lg font-medium text-gray-800 mb-3">Salary Information</h3>
         <div>
           <label className="block text-sm mb-1 text-gray-700 font-medium">Monthly basic income</label>
           <div className="flex items-center">

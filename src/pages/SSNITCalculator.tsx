@@ -40,11 +40,14 @@ const SSNITCalculator = () => {
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6">
           <div>
-            <h2 className="text-2xl font-semibold mb-2 text-gray-800 text-center">SSNIT Contributions Calculator</h2>
-            <p className="text-gray-600 text-center text-sm">Calculate your pension contributions across all three tiers</p>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 text-center">
+              SSNIT Pension Contributions Calculator - Ghana
+            </h1>
+            <p className="text-gray-600 text-center text-sm">Calculate your pension contributions across all three tiers of Ghana's pension system</p>
           </div>
 
           <form className="space-y-4" autoComplete="off" onSubmit={e => e.preventDefault()}>
+            <h2 className="text-lg font-semibold text-gray-800 mb-3">Salary Information</h2>
             <div>
               <label className="block text-sm mb-1 text-gray-700 font-medium">Monthly gross salary</label>
               <div className="flex items-center">
@@ -60,6 +63,7 @@ const SSNITCalculator = () => {
               </div>
             </div>
 
+            <h3 className="text-md font-medium text-gray-800 mb-2">Optional Contributions</h3>
             <div className="flex items-center space-x-2">
               <Switch
                 id="tier3-toggle"
@@ -92,6 +96,8 @@ const SSNITCalculator = () => {
           </form>
 
           <Separator />
+
+          <h2 className="text-xl font-semibold text-gray-800 text-center">Your Pension Contributions</h2>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Monthly Contributions */}
@@ -156,7 +162,7 @@ const SSNITCalculator = () => {
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
-            <h4 className="font-semibold mb-2">About SSNIT Contributions:</h4>
+            <h3 className="font-semibold mb-2">About Ghana's 3-Tier Pension System:</h3>
             <ul className="space-y-1 text-xs">
               <li>• <strong>Tier 1:</strong> Mandatory basic national social security (19% total: 5.5% employee + 13.5% employer)</li>
               <li>• <strong>Tier 2:</strong> Mandatory occupational pension scheme (5% employee contribution)</li>

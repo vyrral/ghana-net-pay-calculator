@@ -7,11 +7,11 @@ const About = () => {
       <Navigation />
       <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Ghana Salary Calculator</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Ghana Tax Calculator</h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              Our Ghana Salary Calculator is a comprehensive tool designed to help employees and employers 
+              Our Ghana Tax Calculator is a comprehensive tool designed to help employees and employers 
               calculate accurate net income, PAYE income tax, and pension deductions according to Ghana's 
               current tax regulations.
             </p>
@@ -39,8 +39,9 @@ const About = () => {
               <li>Your final net take-home income</li>
             </ul>
 
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Tax Bands (2024)</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Ghana Tax Bands for 2024</h2>
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
+              <h3 className="text-lg font-medium text-gray-800 mb-3">Current PAYE Tax Rates</h3>
               <ul className="text-gray-600 space-y-1">
                 <li>First GH₵ 494: 0%</li>
                 <li>Next GH₵ 110: 5%</li>
@@ -51,7 +52,7 @@ const About = () => {
               </ul>
             </div>
 
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Disclaimer</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Accuracy & Disclaimer</h2>
             <p className="text-gray-600 text-sm bg-yellow-50 p-4 rounded-lg">
               While we strive to ensure the accuracy of our calculations, this tool is for informational 
               purposes only. We cannot be held responsible for any errors or discrepancies. For official 

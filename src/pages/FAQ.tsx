@@ -56,11 +56,15 @@ const FAQ = () => {
       <Navigation />
       <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
         <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Frequently Asked Questions</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            Frequently Asked Questions - Ghana Tax Calculator
+          </h1>
           
           <p className="text-gray-600 mb-8">
-            Find answers to common questions about our Ghana salary calculator and tax calculations.
+            Find answers to common questions about our Ghana salary calculator, PAYE tax calculations, and SSNIT contributions.
           </p>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Common Questions</h2>
 
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
