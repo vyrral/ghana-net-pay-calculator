@@ -9,9 +9,9 @@ const Navigation = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Calculator" },
+    { path: "/", label: "Net Salary Calculator" },
     { path: "/ssnit", label: "SSNIT Calculator" },
-    { path: "/hourly", label: "Hourly Converter" },
+    { path: "/hourly", label: "Hourly Rate Converter" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },

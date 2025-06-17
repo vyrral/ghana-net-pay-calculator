@@ -10,6 +10,8 @@ import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import SSNITCalculator from "./pages/SSNITCalculator";
 import SalaryPerHour from "./pages/SalaryPerHour";
+import Disclaimer from "./pages/Disclaimer";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/terms" element={<Terms />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
