@@ -24,7 +24,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <Link to="/" className="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
-            Salary Calculator
+            Tax Calculator
             <span className="text-[22px]" role="img" aria-label="Ghana flag">🇬🇭</span>
           </Link>
 
