@@ -1,6 +1,13 @@
 import { jsPDF } from "jspdf";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose
+} from "@/components/ui/dialog";
 
 type BreakdownEntry = { label: string; amount: number; };
 
@@ -18,7 +25,11 @@ interface Props {
   };
 }
 
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+const ghcFormat = (n: number) =>
+  `GH₵ ${n.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
 const downloadPDF = (results: Props["results"]) => {
   const doc = new jsPDF();
@@ -34,7 +45,11 @@ const downloadPDF = (results: Props["results"]) => {
   y += 8;
   doc.text(`SSNIT (Tier 1, 5.5%): ${ghcFormat(results.ssnit)}`, 14, y);
   y += 8;
-  doc.text(`Tax Relief: ${ghcFormat(results.gross - results.ssnit - results.taxable)}`, 14, y);
+  doc.text(
+    `Tax Relief: ${ghcFormat(results.gross - results.ssnit - results.taxable)}`,
+    14,
+    y
+  );
   y += 8;
   doc.text(`Taxable Income (for PAYE): ${ghcFormat(results.taxable)}`, 14, y);
   y += 8;
@@ -83,7 +98,9 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
         </li>
         <li className="flex justify-between items-center py-2">
           <span className="text-gray-600">Tax Relief</span>
-          <span className="font-medium">{ghcFormat(results.gross - results.ssnit - results.taxable)}</span>
+          <span className="font-medium">
+            {ghcFormat(results.gross - results.ssnit - results.taxable)}
+          </span>
         </li>
         <li className="flex justify-between items-center py-2">
           <span className="text-gray-600">Taxable Income (for PAYE)</span>
@@ -95,19 +112,27 @@ const TaxBreakdown: React.FC<Props> = ({ open, onOpenChange, results }) => (
         </li>
       </ul>
       <div className="mt-4">
-        <div className="font-semibold text-sm mb-2 text-gray-800">Tax Band Application:</div>
+        <div className="font-semibold text-sm mb-2 text-gray-800">
+          Tax Band Application:
+        </div>
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b">
-              <th className="px-2 py-1 text-left font-medium text-gray-600">Band</th>
-              <th className="px-2 py-1 text-right font-medium text-gray-600">Amount</th>
+              <th className="px-2 py-1 text-left font-medium text-gray-600">
+                Band
+              </th>
+              <th className="px-2 py-1 text-right font-medium text-gray-600">
+                Amount
+              </th>
             </tr>
           </thead>
           <tbody>
             {results.breakdown.map((b, i) => (
               <tr key={i}>
                 <td className="px-2 py-0.5">{b.label}</td>
-                <td className="px-2 py-0.5 text-right">{ghcFormat(b.amount)}</td>
+                <td className="px-2 py-0.5 text-right">
+                  {ghcFormat(b.amount)}
+                </td>
               </tr>
             ))}
           </tbody>
