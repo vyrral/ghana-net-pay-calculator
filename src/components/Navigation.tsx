@@ -10,6 +10,8 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/", label: "Calculator" },
+    { path: "/ssnit", label: "SSNIT Calculator" },
+    { path: "/hourly", label: "Hourly Converter" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },

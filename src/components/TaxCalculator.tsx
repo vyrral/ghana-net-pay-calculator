@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import TaxBreakdown from "./TaxBreakdown";
 import NetIncomeResult from "./NetIncomeResult";
+import TaxVisualization from "./TaxVisualization";
 
 interface TaxResults {
   gross: number;
@@ -149,6 +150,9 @@ const TaxCalculator = () => {
         </Button>
         <span className="text-xs text-muted-foreground mt-1">* Allowances are also taxed</span>
       </div>
+
+      <TaxVisualization results={results} />
+
       <TaxBreakdown
         open={showBreakdown}
         onOpenChange={setShowBreakdown}

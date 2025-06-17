@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
+import SSNITCalculator from "./pages/SSNITCalculator";
+import SalaryPerHour from "./pages/SalaryPerHour";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +22,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/ssnit" element={<SSNITCalculator />} />
+          <Route path="/hourly" element={<SalaryPerHour />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
