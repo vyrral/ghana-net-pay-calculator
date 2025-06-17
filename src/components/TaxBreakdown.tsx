@@ -59,6 +59,7 @@ const downloadPDF = (results: Props["results"]) => {
   y += 8;
   doc.setFont(undefined, "bold");
   doc.text(`Net Income: ${ghcFormat(results.netIncome)}`, 14, y);
+
   doc.save("tax_breakdown.pdf");
 };
 
