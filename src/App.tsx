@@ -13,7 +13,9 @@ import SalaryPerHour from "./pages/SalaryPerHour";
 import Disclaimer from "./pages/Disclaimer";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
-
+import WhatsAppSticky from "@/components/WhatsAppSticky";
+// ...in your layout or root component JSX:
+<WhatsAppSticky />
 const queryClient = new QueryClient();
 
 const App = () => (
