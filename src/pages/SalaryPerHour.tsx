@@ -49,7 +49,7 @@ const SalaryPerHour = () => {
           <div className="w-full max-w-2xl bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6 mx-auto mb-12">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 text-center">
-                Ghana Salary to Hourly Rate Converter 2024
+                Ghana Salary to Hourly Rate Converter
               </h1>
               <p className="text-gray-600 text-center text-sm">Convert your salary to hourly rate and compare different pay structures in Ghana</p>
             </div>

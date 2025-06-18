@@ -11,7 +11,7 @@ const Index = () => (
       <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Ghana Tax Calculator - Calculate Your Net Salary & PAYE Tax 2024
+            Ghana Tax Calculator - Calculate Your Net Salary & PAYE Tax
           </h1>
           <p className="text-lg text-gray-600 mb-4">
             Free online calculator for Ghana income tax, SSNIT contributions, and take-home salary based on latest GRA tax bands

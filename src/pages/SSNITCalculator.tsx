@@ -43,7 +43,7 @@ const SSNITCalculator = () => {
           <div className="w-full max-w-2xl bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6 mx-auto mb-12">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800 text-center">
-                SSNIT Pension Contributions Calculator - Ghana 2024
+                SSNIT Pension Contributions Calculator - Ghana
               </h1>
               <p className="text-gray-600 text-center text-sm">Calculate your pension contributions across all three tiers of Ghana's pension system</p>
             </div>
