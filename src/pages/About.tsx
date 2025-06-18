@@ -13,7 +13,7 @@ const About = () => {
           <div className="prose prose-lg max-w-none text-gray-700 space-y-6">
             <p className="text-lg leading-relaxed">
               Ghana Tax Calculator is the premier online tool for accurate salary calculations in Ghana. Developed with precision and updated regularly 
-              to reflect the latest tax regulations from the <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">Ghana Revenue Authority (GRA)</a>, 
+              to reflect the latest tax regulations from the <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Ghana Revenue Authority">Ghana Revenue Authority (GRA)</a>, 
               our platform serves thousands of Ghanaian employees, employers, HR professionals, and financial advisors who need reliable tax calculations.
             </p>
 
@@ -41,7 +41,7 @@ const About = () => {
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">SSNIT Contribution Management</h3>
             <p>
-              Our tool accurately calculates <a href="https://www.ssnit.org.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">SSNIT</a> contributions 
+              Our tool accurately calculates <a href="https://www.ssnit.org.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Social Security and National Insurance Trust">SSNIT</a> contributions 
               based on current rates. The 5.5% employee contribution is automatically computed from your gross income, ensuring compliance 
               with Ghana's social security requirements. We also provide detailed information about employer contributions (13.5%) 
               for comprehensive understanding of total pension investments.
@@ -100,9 +100,9 @@ const About = () => {
             </p>
 
             <p>
-              We align with the <a href="https://fwsc.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">Fair Wages and Salaries Commission's</a> objectives 
+              We align with the <a href="https://fairwages.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Fair Wages and Salaries Commission">Fair Wages and Salaries Commission's</a> objectives 
               of promoting fair compensation practices across Ghana. Our calculator helps ensure transparency in salary negotiations 
-              and employment contracts.
+              and employment contracts across all sectors of Ghana's economy.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Technical Excellence and Security</h2>

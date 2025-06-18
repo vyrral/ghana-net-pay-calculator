@@ -107,7 +107,7 @@ const FAQ = () => {
             
             <div className="prose max-w-none text-gray-700 space-y-6">
               <p className="text-lg leading-relaxed">
-                Ghana's tax system, administered by the <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">Ghana Revenue Authority (GRA)</a>, 
+                Ghana's tax system, administered by the <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Ghana Revenue Authority">Ghana Revenue Authority (GRA)</a>, 
                 operates on progressive principles designed to ensure fair taxation across all income levels. Our comprehensive FAQ addresses 
                 the most common questions about tax calculations, SSNIT contributions, and pension planning in Ghana.
               </p>
@@ -164,7 +164,7 @@ const FAQ = () => {
               <p>
                 Maximizing benefits from all three pension tiers requires strategic planning. While Tier 1 (SSNIT) and Tier 2 
                 are mandatory, optimizing Tier 3 contributions can provide significant tax advantages and enhanced retirement security. 
-                The <a href="https://fwsc.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">Fair Wages and Salaries Commission</a> 
+                The <a href="https://fairwages.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Fair Wages and Salaries Commission">Fair Wages and Salaries Commission</a> 
                 provides guidelines for fair compensation that considers total retirement planning.
               </p>
 
@@ -182,9 +182,9 @@ const FAQ = () => {
                 For official information and personalized advice:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>Ghana Revenue Authority:</strong> <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">www.gra.gov.gh</a> for tax regulations and updates</li>
-                <li><strong>SSNIT:</strong> <a href="https://www.ssnit.org.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">www.ssnit.org.gh</a> for pension information and services</li>
-                <li><strong>Fair Wages Commission:</strong> <a href="https://fwsc.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">www.fwsc.gov.gh</a> for salary guidelines and fair wages</li>
+                <li><strong>Ghana Revenue Authority:</strong> <a href="https://gra.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Ghana Revenue Authority">www.gra.gov.gh</a> for tax regulations and updates</li>
+                <li><strong>SSNIT:</strong> <a href="https://www.ssnit.org.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Social Security and National Insurance Trust">www.ssnit.org.gh</a> for pension information and services</li>
+                <li><strong>Fair Wages Commission:</strong> <a href="https://fairwages.gov.gh/" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline" title="Fair Wages and Salaries Commission">www.fairwages.gov.gh</a> for salary guidelines and fair wages</li>
                 <li><strong>National Pensions Regulatory Authority:</strong> For Tier 2 and 3 pension regulations</li>
               </ul>
             </div>
@@ -199,6 +199,7 @@ const FAQ = () => {
             <a 
               href="/contact" 
               className="inline-flex items-center px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-800 transition-colors"
+              title="Contact Ghana Tax Calculator Support"
             >
               Contact Us for More Help
             </a>
