@@ -75,6 +75,19 @@ const downloadPDF = (results: Props["results"]) => {
   doc.setFont(undefined, "bold");
   doc.text(`Net Income: ${ghcFormat(results.netIncome)}`, 14, y);
 
+  // --- Footer ---
+  const year = new Date().getFullYear();
+  const footerY = 285; // Near the bottom of A4 (297mm), adjust if needed
+  doc.setFontSize(9);
+  doc.setFont(undefined, "normal");
+  doc.textWithLink(
+    `Copyright (${year}) Powered by Koby Digital`,
+    14,
+    footerY,
+    { url: "https://kobydigital.com" }
+  );
+  doc.text(`| Tel: +233274969899`, 100, footerY);
+
   doc.save("tax_breakdown.pdf");
 };
 
