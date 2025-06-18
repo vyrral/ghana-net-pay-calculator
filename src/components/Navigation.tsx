@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ const Navigation = () => {
   const navItems = [
     { path: "/", label: "Salary Calculator" },
     { path: "/ssnit", label: "SSNIT Calculator" },
-    { path: "/hourly", label: "HourlyRate Converter" },
+    { path: "/hourly", label: "HourlyRate Calculator" }, // <-- Updated here
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },
