@@ -12,6 +12,9 @@ import SalaryPerHour from "./pages/SalaryPerHour";
 import Disclaimer from "./pages/Disclaimer";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import LoanCalculator from "./LoanCalculator";
+// ...
+<Route path="/loan" component={LoanCalculator} />
 
 const queryClient = new QueryClient();
 
