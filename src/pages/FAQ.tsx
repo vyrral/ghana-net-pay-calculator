@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import {
@@ -20,7 +19,7 @@ const FAQ = () => {
     },
     {
       question: "How does Ghana's 3-tier pension system work?",
-      answer: "Ghana operates a comprehensive 3-tier pension system: Tier 1 is mandatory SSNIT basic social security (19% total contribution - 5.5% employee + 13.5% employer). Tier 2 is mandatory occupational pension (5% employee contribution) managed by approved fund managers. Tier 3 is voluntary additional savings offering tax advantages and flexible contribution rates typically between 1-16.5% of gross salary."
+      answer: "Ghana's 3-Tier Pension System:\n\nTier 1 – SSNIT (Social Security and National Insurance Trust):\n• Mandatory for all formal sector workers.\n• Total Contribution: 13.5% of gross salary (from the employer) and 5.5% from the employee, totaling 18.5%, not 19%.\n• Managed by SSNIT.\n• Provides monthly pensions upon retirement based on a formula that considers your average salary and years of contribution.\n• Covers other contingencies like invalidity and survivor benefits.\n\nTier 2 – Mandatory Occupational Pension Scheme:\n• Also mandatory.\n• 5% of the employee's gross salary (carved out of the 18.5% total contribution).\n• Managed by private pension fund managers licensed by the National Pensions Regulatory Authority (NPRA).\n• Benefits are lump-sum payments upon retirement or separation, with better returns due to investment flexibility.\n\nTier 3 – Voluntary Provident Fund / Personal Pension Scheme:\n• Voluntary.\n• Open to both formal and informal sector workers.\n• Contributions are flexible (usually 1–16.5% of salary).\n• Offers tax advantages: contributions are tax-deductible up to a limit, and investment income is tax-exempt if conditions are met.\n• Designed for long-term savings, accessible before retirement under certain conditions.\n\nCorrection Notes:\n• The correct total mandatory contribution to Tiers 1 and 2 is 18.5%, not 19%.\n• Tier 2 is not an additional 5%; it is part of the 18.5%, specifically carved out from the employer's portion.\n• Employees don't make a separate 5% Tier 2 contribution; it's deducted from the employer's 13.5%."
     },
     {
       question: "What allowances are taxable under Ghana's PAYE system?",
@@ -94,7 +93,7 @@ const FAQ = () => {
                 <AccordionTrigger className="text-left font-medium">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600">
+                <AccordionContent className="text-gray-600 whitespace-pre-line">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
