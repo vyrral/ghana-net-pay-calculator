@@ -11,6 +11,7 @@ const Navigation = () => {
     { path: "/", label: "Net Salary" },
     { path: "/ssnit", label: "SSNIT" },
     { path: "/hourly", label: "HourlyRate Calculator" }, // <-- Updated here
+    { path: "/loan", label: "Loan Calculator" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },
