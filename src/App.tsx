@@ -14,7 +14,6 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import LoanCalculator from "./LoanCalculator";
 // ...
-<Route path="/loan" component={LoanCalculator} />
 
 const queryClient = new QueryClient();
 
