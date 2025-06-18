@@ -35,6 +35,33 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+// Add this import at the top if you create a separate component
+// import WhatsAppSticky from './components/WhatsAppSticky';
+
+<a 
+  href="https://wa.me/233274969899" // replace with your actual WhatsApp number
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    position: "fixed",
+    bottom: "24px",
+    right: "24px",
+    zIndex: 1000,
+    backgroundColor: "#25D366",
+    color: "white",
+    borderRadius: "50%",
+    width: "56px",
+    height: "56px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+    fontSize: "32px",
+    textDecoration: "none"
+  }}>
+  <span role="img" aria-label="WhatsApp">💬</span>
+</a>
+      
     </TooltipProvider>
   </QueryClientProvider>
 );
