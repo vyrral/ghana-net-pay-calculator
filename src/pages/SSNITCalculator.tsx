@@ -10,6 +10,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+const ghcFormatPDF = (n: number) => `GHC ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
 const SSNITCalculator = () => {
   const [grossSalary, setGrossSalary] = useState<string>("");
@@ -49,7 +50,7 @@ const SSNITCalculator = () => {
 
     doc.setFontSize(12);
     let y = 40;
-    doc.text(`Monthly Gross Salary: ${ghcFormat(parsedSalary)}`, 14, y);
+    doc.text(`Monthly Gross Salary: ${ghcFormatPDF(parsedSalary)}`, 14, y);
 
     y += 15;
     doc.setFont(undefined, "bold");
@@ -57,20 +58,20 @@ const SSNITCalculator = () => {
     doc.setFont(undefined, "normal");
     y += 10;
 
-    doc.text(`Tier 1 (Employee 5.5%): ${ghcFormat(tier1Monthly)}`, 14, y);
+    doc.text(`Tier 1 (Employee 5.5%): ${ghcFormatPDF(tier1Monthly)}`, 14, y);
     y += 8;
-    doc.text(`Tier 1 (Employer 13.5%): ${ghcFormat(tier1EmployerMonthly)}`, 14, y);
+    doc.text(`Tier 1 (Employer 13.5%): ${ghcFormatPDF(tier1EmployerMonthly)}`, 14, y);
     y += 8;
-    doc.text(`Tier 2 (5%): ${ghcFormat(tier2Monthly)}`, 14, y);
+    doc.text(`Tier 2 (5%): ${ghcFormatPDF(tier2Monthly)}`, 14, y);
     y += 8;
     
     if (includeTier3) {
-      doc.text(`Tier 3 (${parsedTier3}%): ${ghcFormat(tier3Monthly)}`, 14, y);
+      doc.text(`Tier 3 (${parsedTier3}%): ${ghcFormatPDF(tier3Monthly)}`, 14, y);
       y += 8;
     }
     
     doc.setFont(undefined, "bold");
-    doc.text(`Total Monthly: ${ghcFormat(totalContributionsMonthly)}`, 14, y);
+    doc.text(`Total Monthly: ${ghcFormatPDF(totalContributionsMonthly)}`, 14, y);
     doc.setFont(undefined, "normal");
 
     y += 15;
@@ -79,18 +80,18 @@ const SSNITCalculator = () => {
     doc.setFont(undefined, "normal");
     y += 10;
 
-    doc.text(`Tier 1 (Total): ${ghcFormat(tier1Yearly)}`, 14, y);
+    doc.text(`Tier 1 (Total): ${ghcFormatPDF(tier1Yearly)}`, 14, y);
     y += 8;
-    doc.text(`Tier 2: ${ghcFormat(tier2Yearly)}`, 14, y);
+    doc.text(`Tier 2: ${ghcFormatPDF(tier2Yearly)}`, 14, y);
     y += 8;
     
     if (includeTier3) {
-      doc.text(`Tier 3: ${ghcFormat(tier3Yearly)}`, 14, y);
+      doc.text(`Tier 3: ${ghcFormatPDF(tier3Yearly)}`, 14, y);
       y += 8;
     }
     
     doc.setFont(undefined, "bold");
-    doc.text(`Total Yearly: ${ghcFormat(totalContributionsYearly)}`, 14, y);
+    doc.text(`Total Yearly: ${ghcFormatPDF(totalContributionsYearly)}`, 14, y);
 
     // Footer
     const footerY = 285;

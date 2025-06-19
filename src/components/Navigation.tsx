@@ -11,11 +11,11 @@ const Navigation = () => {
   const navItems = [
     { path: "/", label: "Net Salary" },
     { path: "/ssnit", label: "SSNIT Benefits" },
-    { path: "/hourly", label: "HourlyRate" },
-    { path: "/vat", label: "VAT" },
     { path: "/wth-tax", label: "WTH Tax" },
+    { path: "/vat", label: "VAT" },
     { path: "/cst", label: "CST" },
     { path: "/loan", label: "Loan" },
+    { path: "/hourly", label: "Hourly Rate" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },
