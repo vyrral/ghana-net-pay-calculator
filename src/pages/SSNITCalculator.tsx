@@ -1,10 +1,11 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Download } from "lucide-react";
+import { jsPDF } from "jspdf";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -34,6 +35,71 @@ const SSNITCalculator = () => {
 
   const totalContributionsMonthly = tier1TotalMonthly + tier2Monthly + tier3Monthly;
   const totalContributionsYearly = totalContributionsMonthly * 12;
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(10);
+    doc.text("Created by TaxCalculatorGh.info | Contact: +233274969899", 14, 10);
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text("SSNIT Pension Contributions Breakdown", 14, 25);
+
+    doc.setFontSize(12);
+    let y = 40;
+    doc.text(`Monthly Gross Salary: ${ghcFormat(parsedSalary)}`, 14, y);
+
+    y += 15;
+    doc.setFont(undefined, "bold");
+    doc.text("Monthly Contributions:", 14, y);
+    doc.setFont(undefined, "normal");
+    y += 10;
+
+    doc.text(`Tier 1 (Employee 5.5%): ${ghcFormat(tier1Monthly)}`, 14, y);
+    y += 8;
+    doc.text(`Tier 1 (Employer 13.5%): ${ghcFormat(tier1EmployerMonthly)}`, 14, y);
+    y += 8;
+    doc.text(`Tier 2 (5%): ${ghcFormat(tier2Monthly)}`, 14, y);
+    y += 8;
+    
+    if (includeTier3) {
+      doc.text(`Tier 3 (${parsedTier3}%): ${ghcFormat(tier3Monthly)}`, 14, y);
+      y += 8;
+    }
+    
+    doc.setFont(undefined, "bold");
+    doc.text(`Total Monthly: ${ghcFormat(totalContributionsMonthly)}`, 14, y);
+    doc.setFont(undefined, "normal");
+
+    y += 15;
+    doc.setFont(undefined, "bold");
+    doc.text("Yearly Contributions:", 14, y);
+    doc.setFont(undefined, "normal");
+    y += 10;
+
+    doc.text(`Tier 1 (Total): ${ghcFormat(tier1Yearly)}`, 14, y);
+    y += 8;
+    doc.text(`Tier 2: ${ghcFormat(tier2Yearly)}`, 14, y);
+    y += 8;
+    
+    if (includeTier3) {
+      doc.text(`Tier 3: ${ghcFormat(tier3Yearly)}`, 14, y);
+      y += 8;
+    }
+    
+    doc.setFont(undefined, "bold");
+    doc.text(`Total Yearly: ${ghcFormat(totalContributionsYearly)}`, 14, y);
+
+    // Footer
+    const footerY = 285;
+    doc.setFontSize(9);
+    doc.setFont(undefined, "normal");
+    doc.text("Email: contact@taxcalculatorgh.info | business@kobydigital.com", 14, footerY);
+
+    doc.save("ssnit_contributions.pdf");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -99,7 +165,18 @@ const SSNITCalculator = () => {
 
             <Separator />
 
-            <h2 className="text-xl font-semibold text-gray-800 text-center">Your Pension Contributions</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-800">Your Pension Contributions</h2>
+              <Button
+                onClick={downloadPDF}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Download size={16} />
+                Download PDF
+              </Button>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               {/* Monthly Contributions */}

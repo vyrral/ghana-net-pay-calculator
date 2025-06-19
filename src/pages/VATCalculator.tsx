@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Download } from "lucide-react";
+import { jsPDF } from "jspdf";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -90,6 +91,64 @@ const VATCalculator = () => {
     flatAmount = includeFlat ? netAmount * (flatRate / 100) : 0;
     totalAmount = parsedAmount;
   }
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(10);
+    doc.text("Created by TaxCalculatorGh.info | Contact: +233274969899", 14, 10);
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text("VAT Calculation Breakdown", 14, 25);
+
+    doc.setFontSize(12);
+    let y = 40;
+    doc.text(`${includeVAT ? "Total amount (including VAT)" : "Net amount (excluding VAT)"}: ${ghcFormat(parsedAmount)}`, 14, y);
+    y += 8;
+    doc.text(`VAT Rate: ${parsedVatRate}%`, 14, y);
+
+    y += 15;
+    doc.setFont(undefined, "bold");
+    doc.text("Tax Breakdown:", 14, y);
+    doc.setFont(undefined, "normal");
+    y += 10;
+
+    doc.text(`Net Amount (excluding taxes): ${ghcFormat(netAmount)}`, 14, y);
+    y += 8;
+    doc.text(`VAT (${parsedVatRate}%): ${ghcFormat(vatAmount)}`, 14, y);
+    y += 8;
+
+    if (includeNHIL) {
+      doc.text(`NHIL (${nhilRate}%): ${ghcFormat(nhilAmount)}`, 14, y);
+      y += 8;
+    }
+    if (includeGetFund) {
+      doc.text(`Get Fund (${getFundRate}%): ${ghcFormat(getFundAmount)}`, 14, y);
+      y += 8;
+    }
+    if (includeCovid) {
+      doc.text(`COVID 19 HRL (${covidRate}%): ${ghcFormat(covidAmount)}`, 14, y);
+      y += 8;
+    }
+    if (includeFlat) {
+      doc.text(`FLAT (${flatRate}%): ${ghcFormat(flatAmount)}`, 14, y);
+      y += 8;
+    }
+
+    y += 8;
+    doc.setFont(undefined, "bold");
+    doc.text(`Total Amount (including all taxes): ${ghcFormat(totalAmount)}`, 14, y);
+
+    // Footer
+    const footerY = 285;
+    doc.setFontSize(9);
+    doc.setFont(undefined, "normal");
+    doc.text("Email: contact@taxcalculatorgh.info | business@kobydigital.com", 14, footerY);
+
+    doc.save("vat_calculation.pdf");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -203,7 +262,18 @@ const VATCalculator = () => {
 
             <Separator />
 
-            <h2 className="text-xl font-semibold text-gray-800 text-center">Tax Calculation Results</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-800">Tax Calculation Results</h2>
+              <Button
+                onClick={downloadPDF}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Download size={16} />
+                Download PDF
+              </Button>
+            </div>
 
             <Card>
               <CardHeader>
