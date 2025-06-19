@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -14,14 +15,30 @@ const VATCalculator = () => {
   const [amount, setAmount] = useState<string>("");
   const [vatRate, setVatRate] = useState<string>("15");
   const [includeVAT, setIncludeVAT] = useState(false);
+  
+  // Optional taxes
+  const [includeNHIL, setIncludeNHIL] = useState(false);
+  const [includeGetFund, setIncludeGetFund] = useState(false);
+  const [includeCovid, setIncludeCovid] = useState(false);
+  const [includeFlat, setIncludeFlat] = useState(false);
 
   const parsedAmount = amount === "" ? 0 : +amount;
   const parsedVatRate = vatRate === "" ? 15 : +vatRate;
+
+  // Tax rates
+  const nhilRate = 2.5;
+  const getFundRate = 2.5;
+  const covidRate = 1;
+  const flatRate = 3;
 
   // VAT calculations
   let vatAmount: number;
   let netAmount: number;
   let totalAmount: number;
+  let nhilAmount = 0;
+  let getFundAmount = 0;
+  let covidAmount = 0;
+  let flatAmount = 0;
 
   if (includeVAT) {
     // Amount includes VAT - calculate backwards
@@ -33,6 +50,45 @@ const VATCalculator = () => {
     netAmount = parsedAmount;
     vatAmount = parsedAmount * (parsedVatRate / 100);
     totalAmount = parsedAmount + vatAmount;
+  }
+
+  // Calculate optional taxes based on net amount
+  if (includeNHIL) {
+    nhilAmount = netAmount * (nhilRate / 100);
+    if (!includeVAT) totalAmount += nhilAmount;
+  }
+  
+  if (includeGetFund) {
+    getFundAmount = netAmount * (getFundRate / 100);
+    if (!includeVAT) totalAmount += getFundAmount;
+  }
+  
+  if (includeCovid) {
+    covidAmount = netAmount * (covidRate / 100);
+    if (!includeVAT) totalAmount += covidAmount;
+  }
+  
+  if (includeFlat) {
+    flatAmount = netAmount * (flatRate / 100);
+    if (!includeVAT) totalAmount += flatAmount;
+  }
+
+  // If amount includes VAT, we need to recalculate when optional taxes are included
+  if (includeVAT && (includeNHIL || includeGetFund || includeCovid || includeFlat)) {
+    const totalOptionalRate = 
+      (includeNHIL ? nhilRate : 0) +
+      (includeGetFund ? getFundRate : 0) +
+      (includeCovid ? covidRate : 0) +
+      (includeFlat ? flatRate : 0);
+    
+    const totalTaxRate = parsedVatRate + totalOptionalRate;
+    netAmount = parsedAmount / (1 + totalTaxRate / 100);
+    vatAmount = netAmount * (parsedVatRate / 100);
+    nhilAmount = includeNHIL ? netAmount * (nhilRate / 100) : 0;
+    getFundAmount = includeGetFund ? netAmount * (getFundRate / 100) : 0;
+    covidAmount = includeCovid ? netAmount * (covidRate / 100) : 0;
+    flatAmount = includeFlat ? netAmount * (flatRate / 100) : 0;
+    totalAmount = parsedAmount;
   }
 
   return (
@@ -95,28 +151,100 @@ const VATCalculator = () => {
                   <span className="font-medium text-gray-500 ml-2">%</span>
                 </div>
               </div>
+
+              <div className="space-y-3">
+                <h3 className="text-md font-semibold text-gray-800">Optional Taxes</h3>
+                
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="nhil"
+                    checked={includeNHIL}
+                    onCheckedChange={setIncludeNHIL}
+                  />
+                  <label htmlFor="nhil" className="text-sm font-medium text-gray-700">
+                    NHIL (2.5%)
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="getfund"
+                    checked={includeGetFund}
+                    onCheckedChange={setIncludeGetFund}
+                  />
+                  <label htmlFor="getfund" className="text-sm font-medium text-gray-700">
+                    Get Fund (2.5%)
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="covid"
+                    checked={includeCovid}
+                    onCheckedChange={setIncludeCovid}
+                  />
+                  <label htmlFor="covid" className="text-sm font-medium text-gray-700">
+                    COVID 19 HRL (1%)
+                  </label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="flat"
+                    checked={includeFlat}
+                    onCheckedChange={setIncludeFlat}
+                  />
+                  <label htmlFor="flat" className="text-sm font-medium text-gray-700">
+                    FLAT (3%)
+                  </label>
+                </div>
+              </div>
             </form>
 
             <Separator />
 
-            <h2 className="text-xl font-semibold text-gray-800 text-center">VAT Calculation Results</h2>
+            <h2 className="text-xl font-semibold text-gray-800 text-center">Tax Calculation Results</h2>
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg text-purple-700">VAT Breakdown</CardTitle>
+                <CardTitle className="text-lg text-purple-700">Tax Breakdown</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Net Amount (excluding VAT)</span>
+                  <span className="text-sm text-gray-600">Net Amount (excluding taxes)</span>
                   <span className="font-medium">{ghcFormat(netAmount)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">VAT ({parsedVatRate}%)</span>
                   <span className="font-medium">{ghcFormat(vatAmount)}</span>
                 </div>
+                {includeNHIL && (
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">NHIL ({nhilRate}%)</span>
+                    <span className="font-medium">{ghcFormat(nhilAmount)}</span>
+                  </div>
+                )}
+                {includeGetFund && (
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">Get Fund ({getFundRate}%)</span>
+                    <span className="font-medium">{ghcFormat(getFundAmount)}</span>
+                  </div>
+                )}
+                {includeCovid && (
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">COVID 19 HRL ({covidRate}%)</span>
+                    <span className="font-medium">{ghcFormat(covidAmount)}</span>
+                  </div>
+                )}
+                {includeFlat && (
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600">FLAT ({flatRate}%)</span>
+                    <span className="font-medium">{ghcFormat(flatAmount)}</span>
+                  </div>
+                )}
                 <Separator />
                 <div className="flex justify-between font-semibold">
-                  <span>Total Amount (including VAT)</span>
+                  <span>Total Amount (including all taxes)</span>
                   <span className="text-purple-700">{ghcFormat(totalAmount)}</span>
                 </div>
               </CardContent>
@@ -129,6 +257,7 @@ const VATCalculator = () => {
                 <li>• Some items are VAT-exempt (basic food items, medical services, education)</li>
                 <li>• VAT-registered businesses can claim input VAT on purchases</li>
                 <li>• Businesses with turnover above GH₵200,000 must register for VAT</li>
+                <li>• Optional taxes: NHIL (2.5%), Get Fund (2.5%), COVID 19 HRL (1%), FLAT (3%)</li>
               </ul>
             </div>
 

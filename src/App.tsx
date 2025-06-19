@@ -12,6 +12,7 @@ import SSNITCalculator from "./pages/SSNITCalculator";
 import SalaryPerHour from "./pages/SalaryPerHour";
 import VATCalculator from "./pages/VATCalculator";
 import WithholdingTaxCalculator from "./pages/WithholdingTaxCalculator";
+import CSTCalculator from "./pages/CSTCalculator";
 import Disclaimer from "./pages/Disclaimer";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/hourly" element={<SalaryPerHour />} />
           <Route path="/vat" element={<VATCalculator />} />
           <Route path="/wth-tax" element={<WithholdingTaxCalculator />} />
+          <Route path="/cst" element={<CSTCalculator />} />
           <Route path="/loan" element={<LoanCalculator />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
