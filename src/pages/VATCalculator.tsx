@@ -159,7 +159,7 @@ const VATCalculator = () => {
                   <Checkbox
                     id="nhil"
                     checked={includeNHIL}
-                    onCheckedChange={setIncludeNHIL}
+                    onCheckedChange={(checked) => setIncludeNHIL(checked === true)}
                   />
                   <label htmlFor="nhil" className="text-sm font-medium text-gray-700">
                     NHIL (2.5%)
@@ -170,7 +170,7 @@ const VATCalculator = () => {
                   <Checkbox
                     id="getfund"
                     checked={includeGetFund}
-                    onCheckedChange={setIncludeGetFund}
+                    onCheckedChange={(checked) => setIncludeGetFund(checked === true)}
                   />
                   <label htmlFor="getfund" className="text-sm font-medium text-gray-700">
                     Get Fund (2.5%)
@@ -181,7 +181,7 @@ const VATCalculator = () => {
                   <Checkbox
                     id="covid"
                     checked={includeCovid}
-                    onCheckedChange={setIncludeCovid}
+                    onCheckedChange={(checked) => setIncludeCovid(checked === true)}
                   />
                   <label htmlFor="covid" className="text-sm font-medium text-gray-700">
                     COVID 19 HRL (1%)
@@ -192,7 +192,7 @@ const VATCalculator = () => {
                   <Checkbox
                     id="flat"
                     checked={includeFlat}
-                    onCheckedChange={setIncludeFlat}
+                    onCheckedChange={(checked) => setIncludeFlat(checked === true)}
                   />
                   <label htmlFor="flat" className="text-sm font-medium text-gray-700">
                     FLAT (3%)
