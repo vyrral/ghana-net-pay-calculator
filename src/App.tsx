@@ -15,7 +15,7 @@ import WithholdingTaxCalculator from "./pages/WithholdingTaxCalculator";
 import Disclaimer from "./pages/Disclaimer";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
-import LoanCalculator from "./LoanCalculator";
+import LoanCalculator from "./pages/LoanCalculator";
 import WhatsAppSticky from "@/components/WhatsappSticky";
 
 const queryClient = new QueryClient();

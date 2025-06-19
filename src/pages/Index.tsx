@@ -1,10 +1,8 @@
-
 import TaxCalculator from "@/components/TaxCalculator";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import WhatsAppSticky from "@/components/WhatsAppSticky";
-// ...in your layout or root component JSX:
-<WhatsAppSticky />
+import WhatsAppSticky from "@/components/WhatsappSticky";
+
 const Index = () => (
   <div className="min-h-screen bg-gray-50 flex flex-col">
     <Navigation />
