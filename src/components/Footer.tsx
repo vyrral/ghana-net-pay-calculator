@@ -47,6 +47,12 @@ const Footer = () => {
           </div>
           
           <div className="flex space-x-6 text-sm">
+            <a 
+              href="https://taxcalculatorgh.info/home/" 
+              className="hover:text-purple-300 transition-colors"
+            >
+              Home
+            </a>
             <Link 
               to="/disclaimer" 
               className="hover:text-purple-300 transition-colors"
