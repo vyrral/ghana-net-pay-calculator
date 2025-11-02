@@ -33,7 +33,7 @@ const calcTax = (basic: number, allowances: number, relief: number): TaxResults 
   let taxable = gross - ssnit - relief;
   if (taxable < 0) taxable = 0;
 
-  // Correct tax bands and ranges per 2024 Ghana tax
+  // Correct tax bands and ranges per 2025 Ghana tax
   const bands = [
     { range: 494, rate: 0 },
     { range: 110, rate: 0.05 },

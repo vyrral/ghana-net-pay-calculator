@@ -11,7 +11,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "How accurate are the Ghana tax calculations in your calculator?",
-      answer: "Our calculator uses the most current Ghana tax bands and rates as approved by the Ghana Revenue Authority (GRA) for 2024. We update our calculations immediately when tax policies change and regularly audit our algorithms against official GRA publications. However, this tool is for informational purposes only - for official calculations and personalized tax advice, please consult with GRA or a qualified tax professional."
+      answer: "Our calculator uses the most current Ghana tax bands and rates as approved by the Ghana Revenue Authority (GRA) for 2025. We update our calculations immediately when tax policies change and regularly audit our algorithms against official GRA publications. However, this tool is for informational purposes only - for official calculations and personalized tax advice, please consult with GRA or a qualified tax professional."
     },
     {
       question: "What is SSNIT and how are contributions calculated?",
@@ -38,8 +38,8 @@ const FAQ = () => {
       answer: "Our calculator is designed for monthly salary calculations. For annual calculations, multiply monthly results by 12, but remember that annual tax calculations may involve additional considerations like annual bonuses (which may be taxed differently), annual tax reliefs, and end-of-year adjustments that aren't captured in monthly calculations."
     },
     {
-      question: "What are the current PAYE tax bands for Ghana in 2024?",
-      answer: "The 2024 Ghana monthly PAYE tax bands are: First GH₵ 494 (0% tax), Next GH₵ 110 (5% tax), Next GH₵ 130 (10% tax), Next GH₵ 3,167 (17.5% tax), Next GH₵ 356 (25% tax), and amounts above GH₵ 4,257 (30% tax). These rates are progressive, meaning you only pay higher rates on income within each band."
+      question: "What are the current PAYE tax bands for Ghana in 2025?",
+      answer: "The 2025 Ghana monthly PAYE tax bands are: First GH₵ 494 (0% tax), Next GH₵ 110 (5% tax), Next GH₵ 130 (10% tax), Next GH₵ 3,167 (17.5% tax), Next GH₵ 356 (25% tax), and amounts above GH₵ 4,257 (30% tax). These rates are progressive, meaning you only pay higher rates on income within each band."
     },
     {
       question: "Is my personal financial information stored when using this calculator?",

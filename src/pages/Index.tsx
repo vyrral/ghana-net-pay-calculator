@@ -21,7 +21,7 @@ const Index = () => (
         
         {/* SEO Content Section */}
         <div className="mt-12 bg-white rounded-xl shadow-md p-8 text-left">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Guide to Ghana Tax Calculations 2024</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Guide to Ghana Tax Calculations 2025</h2>
           
           <div className="prose max-w-none text-gray-700 space-y-6">
             <p className="text-lg leading-relaxed">
@@ -48,9 +48,9 @@ const Index = () => (
               <li><strong>Tax Relief:</strong> Various reliefs available to reduce taxable income</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">2024 Ghana Tax Bands and Rates</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">2025 Ghana Tax Bands and Rates</h3>
             <p>
-              The current PAYE tax bands as approved by GRA for 2024 are structured to ensure fair taxation across income levels:
+              The current PAYE tax bands as approved by GRA for 2025 are structured to ensure fair taxation across income levels:
             </p>
             <div className="bg-gray-50 p-6 rounded-lg my-6">
               <h4 className="font-semibold mb-4">Monthly PAYE Tax Bands:</h4>
@@ -88,7 +88,7 @@ const Index = () => (
 
             <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Benefits of Our Ghana Tax Calculator</h3>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>100% Accurate:</strong> Based on latest GRA tax regulations and SSNIT rates for 2024</li>
+              <li><strong>100% Accurate:</strong> Based on latest GRA tax regulations and SSNIT rates for 2025</li>
               <li><strong>Comprehensive:</strong> Includes all mandatory deductions and contributions</li>
               <li><strong>User-Friendly:</strong> Simple interface with detailed breakdowns</li>
               <li><strong>Free to Use:</strong> No registration or payment required</li>

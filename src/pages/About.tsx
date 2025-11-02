@@ -28,7 +28,7 @@ const About = () => {
             
             <h3 className="text-xl font-semibold text-gray-800 mb-3">PAYE Tax Calculations</h3>
             <p>
-              Our calculator implements Ghana's progressive PAYE tax system with complete accuracy. We use the official 2024 tax bands:
+              Our calculator implements Ghana's progressive PAYE tax system with complete accuracy. We use the official 2025 tax bands:
             </p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li><strong>First GH₵ 494:</strong> Tax-free threshold (0% rate)</li>
