@@ -17,6 +17,7 @@ import Disclaimer from "./pages/Disclaimer";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import LoanCalculator from "./pages/LoanCalculator";
+import USTaxCalculator from "./pages/USTaxCalculator";
 import WhatsAppSticky from "@/components/WhatsappSticky";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/wth-tax" element={<WithholdingTaxCalculator />} />
           <Route path="/cst" element={<CSTCalculator />} />
           <Route path="/loan" element={<LoanCalculator />} />
+          <Route path="/us-tax" element={<USTaxCalculator />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />

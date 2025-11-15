@@ -16,6 +16,7 @@ const Navigation = () => {
     { path: "/cst", label: "CST" },
     { path: "/loan", label: "Loan" },
     { path: "/hourly", label: "Hourly Rate" },
+    { path: "/us-tax", label: "USA Tax 🇺🇸" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },
