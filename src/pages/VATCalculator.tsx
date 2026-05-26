@@ -78,19 +78,19 @@ const VATCalculator = () => {
     y += 8;
 
     if (includeNHIL) {
-      doc.text(`NHIL (${nhilRate}%): ${ghcFormatPDF(nhilAmount)}`, 14, y);
+      doc.text(`NHIL (2.5%): ${ghcFormatPDF(nhilAmount)}`, 14, y);
       y += 8;
     }
     if (includeGetFund) {
-      doc.text(`Get Fund (${getFundRate}%): ${ghcFormatPDF(getFundAmount)}`, 14, y);
+      doc.text(`Get Fund (2.5%): ${ghcFormatPDF(getFundAmount)}`, 14, y);
       y += 8;
     }
     if (includeCovid) {
-      doc.text(`COVID 19 HRL (${covidRate}%): ${ghcFormatPDF(covidAmount)}`, 14, y);
+      doc.text(`COVID 19 HRL (1%): ${ghcFormatPDF(covidAmount)}`, 14, y);
       y += 8;
     }
     if (includeFlat) {
-      doc.text(`FLAT (${flatRate}%): ${ghcFormatPDF(flatAmount)}`, 14, y);
+      doc.text(`FLAT (3%): ${ghcFormatPDF(flatAmount)}`, 14, y);
       y += 8;
     }
 
@@ -247,25 +247,25 @@ const VATCalculator = () => {
                 </div>
                 {includeNHIL && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">NHIL ({nhilRate}%)</span>
+                    <span className="text-sm text-gray-600">NHIL (2.5%)</span>
                     <span className="font-medium">{ghcFormat(nhilAmount)}</span>
                   </div>
                 )}
                 {includeGetFund && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">Get Fund ({getFundRate}%)</span>
+                    <span className="text-sm text-gray-600">Get Fund (2.5%)</span>
                     <span className="font-medium">{ghcFormat(getFundAmount)}</span>
                   </div>
                 )}
                 {includeCovid && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">COVID 19 HRL ({covidRate}%)</span>
+                    <span className="text-sm text-gray-600">COVID 19 HRL (1%)</span>
                     <span className="font-medium">{ghcFormat(covidAmount)}</span>
                   </div>
                 )}
                 {includeFlat && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-600">FLAT ({flatRate}%)</span>
+                    <span className="text-sm text-gray-600">FLAT (3%)</span>
                     <span className="font-medium">{ghcFormat(flatAmount)}</span>
                   </div>
                 )}
