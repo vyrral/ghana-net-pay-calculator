@@ -9,15 +9,15 @@ import { Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-const ghcFormatPDF = (n: number) => `GHC ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+import { ghcFormat, ghcFormatPDF } from "@/lib/format";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const VATCalculator = () => {
+  usePageTitle("Ghana VAT Calculator - Calculate Value Added Tax");
   const [amount, setAmount] = useState<string>("");
   const [vatRate, setVatRate] = useState<string>("15");
   const [includeVAT, setIncludeVAT] = useState(false);
-  
+
   // Optional taxes
   const [includeNHIL, setIncludeNHIL] = useState(false);
   const [includeGetFund, setIncludeGetFund] = useState(false);
@@ -27,71 +27,27 @@ const VATCalculator = () => {
   const parsedAmount = amount === "" ? 0 : +amount;
   const parsedVatRate = vatRate === "" ? 15 : +vatRate;
 
-  // Tax rates
-  const nhilRate = 2.5;
-  const getFundRate = 2.5;
-  const covidRate = 1;
-  const flatRate = 3;
+  // Accumulate all active tax rates into a single total rate
+  const totalOptionalRate =
+    (includeNHIL ? 2.5 : 0) +
+    (includeGetFund ? 2.5 : 0) +
+    (includeCovid ? 1 : 0) +
+    (includeFlat ? 3 : 0);
+  const totalTaxRate = parsedVatRate + totalOptionalRate;
 
-  // VAT calculations
-  let vatAmount: number;
-  let netAmount: number;
-  let totalAmount: number;
-  let nhilAmount = 0;
-  let getFundAmount = 0;
-  let covidAmount = 0;
-  let flatAmount = 0;
+  // netAmount is always the pre-tax base; direction depends on includeVAT
+  const netAmount = includeVAT
+    ? parsedAmount / (1 + totalTaxRate / 100)
+    : parsedAmount;
+  const totalAmount = includeVAT
+    ? parsedAmount
+    : netAmount * (1 + totalTaxRate / 100);
 
-  if (includeVAT) {
-    // Amount includes VAT - calculate backwards
-    totalAmount = parsedAmount;
-    netAmount = parsedAmount / (1 + parsedVatRate / 100);
-    vatAmount = parsedAmount - netAmount;
-  } else {
-    // Amount excludes VAT - calculate forwards
-    netAmount = parsedAmount;
-    vatAmount = parsedAmount * (parsedVatRate / 100);
-    totalAmount = parsedAmount + vatAmount;
-  }
-
-  // Calculate optional taxes based on net amount
-  if (includeNHIL) {
-    nhilAmount = netAmount * (nhilRate / 100);
-    if (!includeVAT) totalAmount += nhilAmount;
-  }
-  
-  if (includeGetFund) {
-    getFundAmount = netAmount * (getFundRate / 100);
-    if (!includeVAT) totalAmount += getFundAmount;
-  }
-  
-  if (includeCovid) {
-    covidAmount = netAmount * (covidRate / 100);
-    if (!includeVAT) totalAmount += covidAmount;
-  }
-  
-  if (includeFlat) {
-    flatAmount = netAmount * (flatRate / 100);
-    if (!includeVAT) totalAmount += flatAmount;
-  }
-
-  // If amount includes VAT, we need to recalculate when optional taxes are included
-  if (includeVAT && (includeNHIL || includeGetFund || includeCovid || includeFlat)) {
-    const totalOptionalRate = 
-      (includeNHIL ? nhilRate : 0) +
-      (includeGetFund ? getFundRate : 0) +
-      (includeCovid ? covidRate : 0) +
-      (includeFlat ? flatRate : 0);
-    
-    const totalTaxRate = parsedVatRate + totalOptionalRate;
-    netAmount = parsedAmount / (1 + totalTaxRate / 100);
-    vatAmount = netAmount * (parsedVatRate / 100);
-    nhilAmount = includeNHIL ? netAmount * (nhilRate / 100) : 0;
-    getFundAmount = includeGetFund ? netAmount * (getFundRate / 100) : 0;
-    covidAmount = includeCovid ? netAmount * (covidRate / 100) : 0;
-    flatAmount = includeFlat ? netAmount * (flatRate / 100) : 0;
-    totalAmount = parsedAmount;
-  }
+  const vatAmount = netAmount * (parsedVatRate / 100);
+  const nhilAmount = includeNHIL ? netAmount * 0.025 : 0;
+  const getFundAmount = includeGetFund ? netAmount * 0.025 : 0;
+  const covidAmount = includeCovid ? netAmount * 0.01 : 0;
+  const flatAmount = includeFlat ? netAmount * 0.03 : 0;
 
   const downloadPDF = () => {
     const doc = new jsPDF();

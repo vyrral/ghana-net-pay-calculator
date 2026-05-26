@@ -1,22 +1,33 @@
 
 import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const LoanCalculator: React.FC = () => {
-  const [loanAmount, setLoanAmount] = useState(10000);
-  const [interestRate, setInterestRate] = useState(18);
-  const [loanTerm, setLoanTerm] = useState(3); // in years
+  usePageTitle("Ghana Loan Calculator - Monthly Payments & Interest");
+  const [loanAmount, setLoanAmount] = useState<string>("10000");
+  const [interestRate, setInterestRate] = useState<string>("18");
+  const [loanTerm, setLoanTerm] = useState<string>("3");
 
-  const monthlyRate = interestRate / 100 / 12;
-  const totalPayments = loanTerm * 12;
+  const parsedAmount = loanAmount === "" ? 0 : +loanAmount;
+  const parsedRate = interestRate === "" ? 0 : +interestRate;
+  const parsedTerm = loanTerm === "" ? 0 : +loanTerm;
 
+  const monthlyRate = parsedRate / 100 / 12;
+  const totalPayments = parsedTerm * 12;
+
+  // Guard against division by zero when interest rate is 0
   const monthlyPayment =
-    (loanAmount * monthlyRate) /
-    (1 - Math.pow(1 + monthlyRate, -totalPayments));
+    totalPayments === 0
+      ? 0
+      : monthlyRate === 0
+      ? parsedAmount / totalPayments
+      : (parsedAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -totalPayments));
 
   const totalRepayment = monthlyPayment * totalPayments;
-  const totalInterest = totalRepayment - loanAmount;
+  const totalInterest = totalRepayment - parsedAmount;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -37,32 +48,40 @@ const LoanCalculator: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block font-medium">Loan Amount (GHS)</label>
-                <input
+                <label className="block font-medium mb-1" htmlFor="loanAmount">Loan Amount (GHS)</label>
+                <Input
+                  id="loanAmount"
                   type="number"
+                  min={0}
                   value={loanAmount}
-                  onChange={(e) => setLoanAmount(Number(e.target.value))}
-                  className="w-full p-2 rounded-md border border-gray-300 dark:bg-zinc-800"
+                  onChange={(e) => setLoanAmount(e.target.value)}
+                  placeholder="10000"
                 />
               </div>
 
               <div>
-                <label className="block font-medium">Interest Rate (%)</label>
-                <input
+                <label className="block font-medium mb-1" htmlFor="interestRate">Interest Rate (%)</label>
+                <Input
+                  id="interestRate"
                   type="number"
+                  min={0}
+                  max={100}
+                  step={0.1}
                   value={interestRate}
-                  onChange={(e) => setInterestRate(Number(e.target.value))}
-                  className="w-full p-2 rounded-md border border-gray-300 dark:bg-zinc-800"
+                  onChange={(e) => setInterestRate(e.target.value)}
+                  placeholder="18"
                 />
               </div>
 
               <div>
-                <label className="block font-medium">Loan Term (years)</label>
-                <input
+                <label className="block font-medium mb-1" htmlFor="loanTerm">Loan Term (years)</label>
+                <Input
+                  id="loanTerm"
                   type="number"
+                  min={1}
                   value={loanTerm}
-                  onChange={(e) => setLoanTerm(Number(e.target.value))}
-                  className="w-full p-2 rounded-md border border-gray-300 dark:bg-zinc-800"
+                  onChange={(e) => setLoanTerm(e.target.value)}
+                  placeholder="3"
                 />
               </div>
             </div>
@@ -86,7 +105,7 @@ const LoanCalculator: React.FC = () => {
           {/* SEO Content Section */}
           <div className="bg-white rounded-xl shadow-md p-8 text-left">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Complete Guide to Loan Calculations in Ghana</h2>
-            
+
             <div className="prose max-w-none text-gray-700 space-y-6">
               <p className="text-lg leading-relaxed">
                 Our comprehensive Ghana Loan Calculator is designed to help borrowers make informed financial decisions when considering personal loans, business loans, mortgages, or any other form of credit in Ghana. Whether you're planning to purchase a home, start a business, or consolidate debt, understanding your loan repayment obligations is crucial for financial planning and budgeting.
@@ -96,7 +115,7 @@ const LoanCalculator: React.FC = () => {
               <p>
                 Our loan calculator uses the standard amortization formula to calculate your monthly payments based on three key factors: the loan amount (principal), the annual interest rate, and the loan term in years. The calculator instantly computes your monthly payment amount, total repayment over the life of the loan, and the total interest you'll pay.
               </p>
-              
+
               <p>
                 The monthly payment calculation considers compound interest, meaning you pay interest on both the principal amount and any accumulated interest. This is the standard method used by banks and financial institutions throughout Ghana, making our calculator highly accurate for real-world loan scenarios.
               </p>
@@ -105,7 +124,7 @@ const LoanCalculator: React.FC = () => {
               <p>
                 Ghana's financial sector offers various loan products to meet different borrowing needs:
               </p>
-              
+
               <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-3">Personal Loans</h4>
               <p>
                 Personal loans in Ghana are typically unsecured loans that can be used for various purposes including medical expenses, education, home improvements, or debt consolidation. Interest rates for personal loans generally range from 15% to 35% annually, depending on the lender and your creditworthiness.
@@ -147,10 +166,6 @@ const LoanCalculator: React.FC = () => {
               </p>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Factors Affecting Loan Interest Rates in Ghana</h3>
-              <p>
-                Several factors influence the interest rates you'll be offered on loans in Ghana:
-              </p>
-              
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Credit History:</strong> Your past repayment behavior significantly impacts the rates offered</li>
                 <li><strong>Income Level:</strong> Higher, stable income typically qualifies for better rates</li>
@@ -182,10 +197,6 @@ const LoanCalculator: React.FC = () => {
               </p>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Loan Application Process in Ghana</h3>
-              <p>
-                The typical loan application process in Ghana involves several steps:
-              </p>
-              
               <ol className="list-decimal pl-6 space-y-2">
                 <li><strong>Pre-qualification:</strong> Initial assessment of your borrowing capacity</li>
                 <li><strong>Application Submission:</strong> Complete loan application with required documentation</li>
@@ -196,10 +207,6 @@ const LoanCalculator: React.FC = () => {
               </ol>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">Required Documentation for Loan Applications</h3>
-              <p>
-                Common documents required for loan applications in Ghana include:
-              </p>
-              
               <ul className="list-disc pl-6 space-y-2">
                 <li>Valid Ghana Card or other acceptable identification</li>
                 <li>Proof of income (salary slips, bank statements, tax returns)</li>
@@ -214,8 +221,8 @@ const LoanCalculator: React.FC = () => {
               <div className="bg-blue-50 p-6 rounded-lg mt-8">
                 <h4 className="font-semibold text-blue-800 mb-2">Important Loan Disclaimer</h4>
                 <p className="text-blue-700 text-sm">
-                  This loan calculator provides estimates based on the information you input and should be used for informational purposes only. 
-                  Actual loan terms, interest rates, and monthly payments may vary based on your creditworthiness, the lender's policies, and current market conditions. 
+                  This loan calculator provides estimates based on the information you input and should be used for informational purposes only.
+                  Actual loan terms, interest rates, and monthly payments may vary based on your creditworthiness, the lender's policies, and current market conditions.
                   Always consult with qualified financial advisors and compare multiple lenders before making borrowing decisions.
                 </p>
               </div>
@@ -223,8 +230,8 @@ const LoanCalculator: React.FC = () => {
               <div className="bg-green-50 p-6 rounded-lg mt-6">
                 <h4 className="font-semibold text-green-800 mb-2">Need More Financial Calculators?</h4>
                 <p className="text-green-700 text-sm">
-                  Explore our other financial calculators including the <a href="/" className="underline" title="Ghana Tax Calculator">Ghana Tax Calculator</a> for salary planning, 
-                  <a href="/ssnit" className="underline" title="SSNIT Benefits Calculator">SSNIT Benefits Calculator</a> for pension planning, and 
+                  Explore our other financial calculators including the <a href="/" className="underline" title="Ghana Tax Calculator">Ghana Tax Calculator</a> for salary planning,
+                  <a href="/ssnit" className="underline" title="SSNIT Benefits Calculator">SSNIT Benefits Calculator</a> for pension planning, and
                   <a href="/vat" className="underline" title="VAT Calculator Ghana">VAT Calculator</a> for business tax calculations.
                 </p>
               </div>

@@ -1,5 +1,6 @@
 
 import React from "react";
+import { ghcFormat } from "@/lib/format";
 
 interface Props {
   netIncome: number;
@@ -7,8 +8,6 @@ interface Props {
   ssnit: number;
   tier2?: number;
 }
-
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
 const NetIncomeResult: React.FC<Props> = ({ netIncome, incomeTax, ssnit, tier2 }) => (
   <div className="w-full flex flex-col items-center gap-1">

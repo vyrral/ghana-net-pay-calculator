@@ -7,10 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+import { ghcFormat } from "@/lib/format";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const WithholdingTaxCalculator = () => {
+  usePageTitle("Ghana Withholding Tax Calculator - WHT Rates");
   const [amount, setAmount] = useState<string>("");
   const [serviceType, setServiceType] = useState<string>("professional");
 

@@ -1,77 +1,12 @@
 
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import TaxBreakdown from "./TaxBreakdown";
 import NetIncomeResult from "./NetIncomeResult";
 import TaxVisualization from "./TaxVisualization";
-
-interface TaxResults {
-  gross: number;
-  ssnit: number;
-  tier2: number;
-  taxable: number;
-  incomeTax: number;
-  netIncome: number;
-  breakdown: { label: string; amount: number; }[];
-}
-
-const ghcFormat = (n: number) =>
-  `GH₵ ${n.toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
-
-// Correct Ghana PAYE: 494 at 0%, 110 at 5%, 130 at 10%, 3167 at 17.5%, 356 at 25%, rest at 30%
-const calcTax = (basic: number, allowances: number, relief: number): TaxResults => {
-  const gross = basic + allowances;
-  const ssnit = +(gross * 0.055).toFixed(2);
-  const tier2 = +(gross * 0.05).toFixed(2);
-
-  // PAYE taxable income: gross - SSNIT - relief
-  let taxable = gross - ssnit - relief;
-  if (taxable < 0) taxable = 0;
-
-  // Correct tax bands and ranges per 2025 Ghana tax
-  const bands = [
-    { range: 494, rate: 0 },
-    { range: 110, rate: 0.05 },
-    { range: 130, rate: 0.10 },
-    { range: 3167, rate: 0.175 },
-    { range: 356, rate: 0.25 },
-    { range: Infinity, rate: 0.30 }
-  ];
-
-  let remaining = taxable, incomeTax = 0;
-  const breakdown: { label: string; amount: number }[] = [];
-
-  for (let i = 0; i < bands.length; ++i) {
-    if (remaining <= 0) break;
-    const amt = Math.min(remaining, bands[i].range);
-    if (bands[i].rate === 0) {
-      breakdown.push({ label: "0% band", amount: amt });
-    } else {
-      breakdown.push({ label: `${(bands[i].rate * 100).toFixed(1)}% band`, amount: amt });
-      incomeTax += amt * bands[i].rate;
-    }
-    remaining -= amt;
-  }
-
-  incomeTax = +incomeTax.toFixed(2);
-  // Net income: only SSNIT and income tax deducted, not Tier 2 (matches reference)
-  const netIncome = +(gross - ssnit - incomeTax).toFixed(2);
-
-  return {
-    gross,
-    ssnit,
-    tier2,
-    taxable,
-    incomeTax,
-    netIncome,
-    breakdown,
-  };
-};
+import { calcGhanaTax } from "@/lib/taxCalculations";
 
 const TaxCalculator = () => {
   const [basic, setBasic] = useState<string>("");
@@ -84,7 +19,10 @@ const TaxCalculator = () => {
   const parsedAllowances = allowances === "" ? 0 : +allowances;
   const parsedRelief = relief === "" ? 0 : +relief;
 
-  const results = calcTax(parsedBasic, parsedAllowances, parsedRelief);
+  const results = useMemo(
+    () => calcGhanaTax(parsedBasic, parsedAllowances, parsedRelief),
+    [parsedBasic, parsedAllowances, parsedRelief]
+  );
 
   return (
     <div className="w-full max-w-md bg-white shadow-md border border-gray-200 rounded-xl py-8 px-6 md:px-10 flex flex-col gap-6 mx-auto">

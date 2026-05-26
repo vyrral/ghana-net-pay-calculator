@@ -1,111 +1,33 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { calcUSTax, US_STANDARD_DEDUCTIONS } from "@/lib/taxCalculations";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const USTaxCalculator = () => {
+  usePageTitle("USA Tax Refund Calculator 2026 - Federal Tax Estimate");
   const [income, setIncome] = useState<string>("");
-  const [filingStatus, setFilingStatus] = useState<string>("single");
+  const [filingStatus, setFilingStatus] = useState<"single" | "married" | "head">("single");
   const [deductions, setDeductions] = useState<string>("standard");
+  const [itemizedAmount, setItemizedAmount] = useState<string>("");
   const [dependents, setDependents] = useState<string>("0");
 
-  // 2026 Federal Tax Brackets (projected based on inflation adjustments)
-  const taxBrackets = {
-    single: [
-      { limit: 11600, rate: 0.10 },
-      { limit: 47150, rate: 0.12 },
-      { limit: 100525, rate: 0.22 },
-      { limit: 191950, rate: 0.24 },
-      { limit: 243725, rate: 0.32 },
-      { limit: 609350, rate: 0.35 },
-      { limit: Infinity, rate: 0.37 },
-    ],
-    married: [
-      { limit: 23200, rate: 0.10 },
-      { limit: 94300, rate: 0.12 },
-      { limit: 201050, rate: 0.22 },
-      { limit: 383900, rate: 0.24 },
-      { limit: 487450, rate: 0.32 },
-      { limit: 731200, rate: 0.35 },
-      { limit: Infinity, rate: 0.37 },
-    ],
-    head: [
-      { limit: 16550, rate: 0.10 },
-      { limit: 63100, rate: 0.12 },
-      { limit: 100500, rate: 0.22 },
-      { limit: 191950, rate: 0.24 },
-      { limit: 243700, rate: 0.32 },
-      { limit: 609350, rate: 0.35 },
-      { limit: Infinity, rate: 0.37 },
-    ],
-  };
+  const results = useMemo(() => calcUSTax(
+    parseFloat(income) || 0,
+    filingStatus,
+    deductions,
+    parseFloat(itemizedAmount) || 0,
+    parseInt(dependents) || 0
+  ), [income, filingStatus, deductions, itemizedAmount, dependents]);
 
-  // Standard deductions for 2026 (projected)
-  const standardDeduction = {
-    single: 14600,
-    married: 29200,
-    head: 21900,
-  };
+  const formatCurrency = (num: number) =>
+    `$${num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-  const calculateTax = () => {
-    const grossIncome = parseFloat(income) || 0;
-    const numDependents = parseInt(dependents) || 0;
-    
-    if (grossIncome === 0) {
-      return { taxableIncome: 0, federalTax: 0, effectiveRate: 0, refund: 0, takeHome: 0 };
-    }
-
-    // Get appropriate standard deduction
-    const stdDeduction = standardDeduction[filingStatus as keyof typeof standardDeduction];
-    
-    // Child tax credit ($2000 per dependent)
-    const childTaxCredit = numDependents * 2000;
-    
-    // Calculate taxable income
-    const deductionAmount = deductions === "standard" ? stdDeduction : stdDeduction * 1.5; // Simplified itemized
-    const taxableIncome = Math.max(0, grossIncome - deductionAmount);
-
-    // Calculate federal tax using brackets
-    const brackets = taxBrackets[filingStatus as keyof typeof taxBrackets];
-    let tax = 0;
-    let previousLimit = 0;
-
-    for (const bracket of brackets) {
-      if (taxableIncome <= previousLimit) break;
-      
-      const taxableInBracket = Math.min(taxableIncome, bracket.limit) - previousLimit;
-      tax += taxableInBracket * bracket.rate;
-      previousLimit = bracket.limit;
-      
-      if (taxableIncome <= bracket.limit) break;
-    }
-
-    // Apply tax credits
-    const taxAfterCredits = Math.max(0, tax - childTaxCredit);
-    
-    // Estimate withholding (assume 15% was withheld)
-    const estimatedWithholding = grossIncome * 0.15;
-    
-    // Calculate refund or amount owed
-    const refund = estimatedWithholding - taxAfterCredits;
-    
-    const effectiveRate = (taxAfterCredits / grossIncome) * 100;
-    const takeHome = grossIncome - taxAfterCredits;
-
-    return {
-      taxableIncome,
-      federalTax: taxAfterCredits,
-      effectiveRate,
-      refund,
-      takeHome,
-    };
-  };
-
-  const results = calculateTax();
-  const formatCurrency = (num: number) => `$${num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const stdDeduction = US_STANDARD_DEDUCTIONS[filingStatus];
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -116,7 +38,7 @@ const USTaxCalculator = () => {
             USA Tax Refund Calculator 2026 🇺🇸
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Estimate your 2026 federal tax refund based on projected IRS tax brackets and standard deductions. 
+            Estimate your 2026 federal tax refund based on projected IRS tax brackets and standard deductions.
             Calculate your take-home pay and potential refund instantly.
           </p>
         </div>
@@ -140,7 +62,7 @@ const USTaxCalculator = () => {
 
               <div>
                 <Label htmlFor="filingStatus">Filing Status</Label>
-                <Select value={filingStatus} onValueChange={setFilingStatus}>
+                <Select value={filingStatus} onValueChange={(v) => setFilingStatus(v as typeof filingStatus)}>
                   <SelectTrigger id="filingStatus">
                     <SelectValue />
                   </SelectTrigger>
@@ -159,11 +81,28 @@ const USTaxCalculator = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="standard">Standard Deduction</SelectItem>
-                    <SelectItem value="itemized">Itemized Deduction</SelectItem>
+                    <SelectItem value="standard">Standard Deduction ({formatCurrency(stdDeduction)})</SelectItem>
+                    <SelectItem value="itemized">Itemized Deduction (enter amount)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+
+              {deductions === "itemized" && (
+                <div>
+                  <Label htmlFor="itemizedAmount">Total Itemized Deductions ($)</Label>
+                  <Input
+                    id="itemizedAmount"
+                    type="number"
+                    min={0}
+                    placeholder="e.g., 20000"
+                    value={itemizedAmount}
+                    onChange={(e) => setItemizedAmount(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Sum of mortgage interest, charitable contributions, state taxes, etc.
+                  </p>
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="dependents">Number of Dependents</Label>
@@ -217,8 +156,8 @@ const USTaxCalculator = () => {
             <CardContent className="space-y-4 text-muted-foreground">
               <h3 className="text-lg font-semibold text-foreground">2026 Federal Tax Brackets</h3>
               <p>
-                The US federal tax system uses progressive tax brackets, meaning different portions of your income 
-                are taxed at different rates. For 2026, the IRS tax brackets are projected to be adjusted for inflation, 
+                The US federal tax system uses progressive tax brackets, meaning different portions of your income
+                are taxed at different rates. For 2026, the IRS tax brackets are projected to be adjusted for inflation,
                 with rates ranging from 10% to 37% depending on your income level and filing status.
               </p>
 
@@ -231,8 +170,8 @@ const USTaxCalculator = () => {
 
               <h3 className="text-lg font-semibold text-foreground">Tax Credits</h3>
               <p>
-                Tax credits directly reduce your tax liability. The Child Tax Credit provides up to $2,000 per 
-                qualifying dependent child under age 17. Additional credits may include the Earned Income Tax Credit 
+                Tax credits directly reduce your tax liability. The Child Tax Credit provides up to $2,000 per
+                qualifying dependent child under age 17. Additional credits may include the Earned Income Tax Credit
                 (EITC), education credits, and more.
               </p>
 
@@ -246,8 +185,8 @@ const USTaxCalculator = () => {
 
               <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg mt-4">
                 <p className="text-sm font-semibold">
-                  ⚠️ Disclaimer: This calculator provides estimates based on projected 2026 tax brackets. 
-                  Actual tax amounts may vary. Consult with a qualified tax professional or use official IRS resources 
+                  ⚠️ Disclaimer: This calculator provides estimates based on projected 2026 tax brackets.
+                  Actual tax amounts may vary. Consult with a qualified tax professional or use official IRS resources
                   for precise calculations. Visit{" "}
                   <a href="https://www.irs.gov" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
                     IRS.gov
