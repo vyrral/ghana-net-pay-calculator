@@ -8,11 +8,11 @@ import { Download } from "lucide-react";
 import { jsPDF } from "jspdf";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-const ghcFormatPDF = (n: number) => `GHC ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+import { ghcFormat, ghcFormatPDF } from "@/lib/format";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const SSNITCalculator = () => {
+  usePageTitle("SSNIT Pension Calculator Ghana - All 3 Tiers");
   const [grossSalary, setGrossSalary] = useState<string>("");
   const [includeTier3, setIncludeTier3] = useState(false);
   const [tier3Percentage, setTier3Percentage] = useState<string>("5");

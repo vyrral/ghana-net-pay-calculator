@@ -6,10 +6,11 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-
-const ghcFormat = (n: number) => `GH₵ ${n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+import { ghcFormat } from "@/lib/format";
+import { usePageTitle } from "@/hooks/use-page-title";
 
 const SalaryPerHour = () => {
+  usePageTitle("Ghana Salary to Hourly Rate Converter");
   const [salary, setSalary] = useState<string>("");
   const [salaryType, setSalaryType] = useState<string>("monthly");
   const [hoursPerWeek, setHoursPerWeek] = useState<string>("40");

@@ -2,8 +2,11 @@ import TaxCalculator from "@/components/TaxCalculator";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppSticky from "@/components/WhatsappSticky";
+import { usePageTitle } from "@/hooks/use-page-title";
 
-const Index = () => (
+const Index = () => {
+  usePageTitle("Ghana Tax Calculator - Calculate Your Net Salary & PAYE Tax");
+  return (
   <div className="min-h-screen bg-gray-50 flex flex-col">
     <Navigation />
     {/* Main Content */}
@@ -151,6 +154,7 @@ const Index = () => (
     </main>
     <Footer />
   </div>
-);
+  );
+};
 
 export default Index;

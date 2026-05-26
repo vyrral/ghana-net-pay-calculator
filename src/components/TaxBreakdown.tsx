@@ -1,3 +1,4 @@
+import React from "react";
 import { jsPDF } from "jspdf";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,30 +9,16 @@ import {
   DialogDescription,
   DialogClose
 } from "@/components/ui/dialog";
-
-type BreakdownEntry = { label: string; amount: number; };
+import { ghcFormat, ghcFormatPDF } from "@/lib/format";
+import type { TaxResults } from "@/lib/taxCalculations";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  results: {
-    gross: number;
-    ssnit: number;
-    tier2: number;
-    taxable: number;
-    incomeTax: number;
-    netIncome: number;
-    breakdown: BreakdownEntry[];
-  };
+  results: TaxResults;
 }
 
-const ghcFormat = (n: number) =>
-  `GHC ${n.toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
-
-const downloadPDF = (results: Props["results"]) => {
+const downloadPDF = (results: TaxResults) => {
   const doc = new jsPDF();
   doc.setFontSize(18);
   doc.text("Tax Breakdown", 14, 16);
@@ -41,19 +28,19 @@ const downloadPDF = (results: Props["results"]) => {
   doc.text("See how your monthly salary tax is calculated.", 14, y);
 
   y += 10;
-  doc.text(`Gross Income: ${ghcFormat(results.gross)}`, 14, y);
+  doc.text(`Gross Income: ${ghcFormatPDF(results.gross)}`, 14, y);
   y += 8;
-  doc.text(`SSNIT (Tier 1, 5.5%): ${ghcFormat(results.ssnit)}`, 14, y);
+  doc.text(`SSNIT (Tier 1, 5.5%): ${ghcFormatPDF(results.ssnit)}`, 14, y);
   y += 8;
   doc.text(
-    `Tax Relief: ${ghcFormat(results.gross - results.ssnit - results.taxable)}`,
+    `Tax Relief: ${ghcFormatPDF(results.gross - results.ssnit - results.taxable)}`,
     14,
     y
   );
   y += 8;
-  doc.text(`Taxable Income (for PAYE): ${ghcFormat(results.taxable)}`, 14, y);
+  doc.text(`Taxable Income (for PAYE): ${ghcFormatPDF(results.taxable)}`, 14, y);
   y += 8;
-  doc.text(`Pension (Tier 2, 5%): ${ghcFormat(results.tier2)}`, 14, y);
+  doc.text(`Pension (Tier 2, 5%): ${ghcFormatPDF(results.tier2)}`, 14, y);
 
   y += 12;
   doc.setFont(undefined, "bold");
@@ -67,17 +54,16 @@ const downloadPDF = (results: Props["results"]) => {
 
   results.breakdown.forEach((b) => {
     doc.text(b.label, 14, y);
-    doc.text(ghcFormat(b.amount), 80, y);
+    doc.text(ghcFormatPDF(b.amount), 80, y);
     y += 6;
   });
 
   y += 8;
   doc.setFont(undefined, "bold");
-  doc.text(`Net Income: ${ghcFormat(results.netIncome)}`, 14, y);
+  doc.text(`Net Income: ${ghcFormatPDF(results.netIncome)}`, 14, y);
 
-  // --- Footer ---
   const year = new Date().getFullYear();
-  const footerY = 285; // Near the bottom of A4 (297mm), adjust if needed
+  const footerY = 285;
   doc.setFontSize(9);
   doc.setFont(undefined, "normal");
   doc.textWithLink(
